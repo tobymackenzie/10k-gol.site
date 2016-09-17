@@ -98,12 +98,20 @@ class HTTP{
 
 		//--inject scripts if not in cache
 		if(!$this->hasCache){
-			$response = str_replace('<script><!-- ', "<script><!--\n" . file_get_contents(__DIR__ . '/../main.js') . "\n", $response);
+			$jsData = Array(
+				'baseUrl'=> $this->getRelativeUrlBase()
+				,'hasCache'=> $this->hasCache
+				,'v'=> $this->version
+			);
+			$content = "var TJM = " . json_encode($jsData) . ";"; //--config from PHP
+			$content .= file_get_contents(__DIR__ . '/../pre.js');
+			$response = str_replace('<script><!-- ', "<script><!--\n" . $content . "\n", $response);
 		}
 
 		//--inject styles if not in cache
 		if(!$this->hasCache){
-			$response = str_replace('<style><!-- ', "<style><!--\n" . file_get_contents(__DIR__ . '/../main.css') . "\n", $response);
+			$content = file_get_contents(__DIR__ . '/../main.css');
+			$response = str_replace('<style><!-- ', "<style><!--\n" . $content . "\n", $response);
 		}
 		return $response;
 	}

@@ -23,6 +23,7 @@ foreach(Array(
 //--scripts
 chdir($projectRoot);
 passthru('ln -nfs ' . $projectRoot . '/src/scripts/main.js ' . $projectRoot . '/main.js');
+passthru('ln -nfs ' . $projectRoot . '/src/scripts/pre.js ' . $projectRoot . '/pre.js');
 
 //--styles
 passthru('sass --sourcemap=none ' . $projectRoot . '/src/styles/builds/main.scss ' . $projectRoot . '/main.css');

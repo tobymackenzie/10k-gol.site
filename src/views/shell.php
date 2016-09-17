@@ -20,9 +20,6 @@ if($hasCache){
 		?></main><?php
 		include(__DIR__ . '/footer.php');
 		?><script><!-- --></script><?php
-if($hasCache){
-		?><script src="<?=$this->getRelativeUrlBase()?>/main.js"></script><?php
-}
 if(!$hasCache){
 		?><noscript><link href="<?=$this->getRelativeUrlBase()?>/main.css" rel="stylesheet" /></noscript><?php
 }
