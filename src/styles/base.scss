@@ -46,6 +46,7 @@ table{
 	list-style: none;
 	>li{
 		display: inline-block;
+		margin: 0 0.2em;
 	}
 }
 @mixin sro(
