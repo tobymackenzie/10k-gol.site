@@ -13,10 +13,15 @@
 	padding: 0.5em 1em;
 	text-align: center;
 }
+.tickCount{
+	display: inline-block;
+	margin: 0 0.4em;
+}
 
 //==controls
 .gameControls{
 	@extend %navList;
+	display: inline;
 }
 %tickActionIcon{
 	@extend %icon;
