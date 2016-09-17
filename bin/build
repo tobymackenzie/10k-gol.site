@@ -22,8 +22,20 @@ foreach(Array(
 
 //--scripts
 chdir($projectRoot);
-passthru('ln -nfs ' . $projectRoot . '/src/scripts/main.js ' . $projectRoot . '/main.js');
-passthru('ln -nfs ' . $projectRoot . '/src/scripts/pre.js ' . $projectRoot . '/pre.js');
+foreach(Array(
+	Array(
+		'src'=> $projectRoot . '/src/scripts/main.js'
+		,'dest'=> $projectRoot . '/main.js'
+	)
+	,Array(
+		'src'=> $projectRoot . '/src/scripts/pre.js'
+		,'dest'=> $projectRoot . '/pre.js'
+	)
+) as $data){
+	$command = 'uglifyjs --compress --mangle -- ' . $data['src'] . ' > ' . $data['dest'];
+	//-# may need for newer versions of uglify --support-ie8
+	passthru($command);
+}
 
 //--styles
 passthru('sass --sourcemap=none ' . $projectRoot . '/src/styles/builds/main.scss ' . $projectRoot . '/main.css');
