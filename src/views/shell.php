@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html<?php if($id){ ?> class="page-<?=$id?>"<?php } ?> lang="en"><?php
+	?><head><?php
+		?><meta charset="utf-8" /><?php
+		?><title>Conway's Game of Life (10k) - Toby Mackenzie</title><?php
+		?><meta content="initial-scale=1,width=device-width" name="viewport" /><?php
+if($hasCache){
+		?><link href="<?=$this->getRelativeUrlBase()?>/main.css" rel="stylesheet" /><?php
+}else{
+		?><style><!-- --></style><?php
+}
+	?></head><?php
+	?><body><?php
+		include(__DIR__ . '/header.php');
+		?><main id="main"><?php
+			if(isset($content)){
+				echo $content;
+			}
+			?><a class="blocker" href="#"><b>Back to top</b></a><?php
+		?></main><?php
+		include(__DIR__ . '/footer.php');
+		?><script><!-- --></script><?php
+if($hasCache){
+		?><script src="<?=$this->getRelativeUrlBase()?>/main.js"></script><?php
+}
+if(!$hasCache){
+		?><noscript><link href="<?=$this->getRelativeUrlBase()?>/main.css" rel="stylesheet" /></noscript><?php
+}
+	?></body><?php
+?></html>

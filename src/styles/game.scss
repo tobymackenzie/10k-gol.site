@@ -1,0 +1,40 @@
+@import './grid';
+
+.game{
+	display: flex;
+	align-items: stretch;
+	flex-basis: 100%;
+	flex-direction: column;
+	flex-grow: 1;
+	height: 100%;
+}
+.gameHeader{
+	flex-grow: 0;
+	padding: 0.5em 1em;
+	text-align: center;
+}
+
+//==controls
+.gameControls{
+	@extend %navList;
+}
+%tickActionIcon{
+	@extend %icon;
+	font-size: 1.1em;
+	top: 0;
+	transform: scaleY(1.6);
+}
+.nextTick{
+	&:after{
+		@extend %tickActionIcon;
+		content: '>';
+		margin-left: 0.4em;
+	}
+}
+.previousTick{
+	&:before{
+		@extend %tickActionIcon;
+		content: '<';
+		margin-right: 0.4em;
+	}
+}

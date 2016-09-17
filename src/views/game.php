@@ -1,0 +1,13 @@
+<?php
+?><div class="game" data-tick="<?=$game->getTick()?>"><?php
+	?><div class="gameHeader"><?php
+		?><ul class="gameControls">
+			<li><a class="previousTick<?php if($game->getTick() <= 1){ ?> disabled<?php } ?>" href="<?=($game->getTick() > 1 ? $this->getPreviousUrl() : $this->buildGameUrl())?>">Previous tick</a></li>
+			<li><a class="nextTick" href="<?=$this->getNextUrl()?>">Next tick</a></li>
+			<li><a href="#settings">Settings</a></li>
+		</ul><?php
+		?><div class="tickCount"><strong>Tick:</strong> <b><?=$game->getTick()?></b></div><?php
+	?></div><?php
+	include(__DIR__ . '/grid.php');
+?></div><?php
+include(__DIR__ . '/settings.php');

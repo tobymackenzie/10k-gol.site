@@ -1,0 +1,97 @@
+.header{
+	border-bottom: 1px solid $color-border;
+	flex-grow: 0;
+	flex-shrink: 0;
+	text-align: center;
+	padding: 0.4em 0;
+	@include mq('nnvp'){
+		padding: 0.25em 0;
+	}
+}
+.logo{
+	color: $color-logo;
+	display: inline-block;
+	font-size: 1.2em;
+	margin: 0.4em 0;
+	padding: 0 0.8em;
+	text-decoration: none;
+	@include mq('nnvp'){
+		font-size: 1em;
+		margin: 0.25em 0;
+		padding: 0 0.5em;
+	}
+	>b{
+		text-decoration: underline;
+	}
+	>b + b{
+		color: $color-toby;
+		display: inline-block;
+		font-size: 0.9em;
+		text-decoration: none;
+		transform: rotate(0);
+		transition: transform 0.5s ease;
+		vertical-align: middle;
+		&:hover{
+			transform: rotate(-720deg);
+		}
+	}
+	&:focus, &:hover{
+		>b + b{
+			color: $color-logo;
+		}
+	}
+}
+.jumpTo{
+	@extend %sro;
+	&:focus, &:hover{
+		@include sroOff($position: absolute);
+		background: $color-gameBG;
+		left: 0;
+		padding: 0.8em;
+		top: 0;
+		z-index: 1000;
+	}
+}
+nav{
+	display: inline-block;
+}
+.nav{
+	@extend %navList;
+	margin: 0.4em 0;
+	padding: 0 0.8em;
+	@include mq('nnvp'){
+		margin: 0.25em 0;
+		padding: 0 0.5em;
+	}
+	>li:first-child{
+		display: block;
+	}
+}
+.infoA{
+	&:before{
+		@extend %icon;
+		border: 2px solid;
+		border-radius: 50%;
+		content: 'i';
+		// content: '¡';
+		font-size: 0.7em;
+		margin-right: 0.4em;
+		padding: 0.2em 0.3em;
+	}
+}
+.projectA{
+	&:before{
+		@extend %icon;
+		content: '</>';
+		font-size: 0.8em;
+		margin-right: 0.4em;
+	}
+}
+[href='#settings']{
+	&:before{
+		@extend %icon;
+		content: '±';
+		font-size: 0.9em;
+		margin-right: 0.4em;
+	}
+}

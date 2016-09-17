@@ -1,0 +1,94 @@
+*{
+	box-sizing: border-box;
+}
+a{
+	color: $color-link;
+	&:focus, &:hover{
+		color: $color-focusedLink;
+	}
+}
+body, html{
+	margin: 0;
+	padding: 0;
+}
+h1, h2{
+	color: $color-heading;
+	font-family: $font-heading;
+	&:first-child{
+		margin-top: 0;
+	}
+}
+html{
+	background: $color-gameBG;
+	color: $color-gameFG;
+	font-family: $font-base;
+	line-height: 1.5;
+}
+table{
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*=====
+==basic modules
+=====*/
+%icon{
+	display: inline-block;
+	font-weight: bold;
+	line-height: 1;
+	position: relative;
+	top: -0.1em;
+	vertical-align: middle;
+}
+%navList{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	>li{
+		display: inline-block;
+	}
+}
+@mixin sro(
+	$border: 0
+	,$clip: rect(0 0 0 0)
+	,$height: 1px
+	,$margin: -1px
+	,$overflow: hidden
+	,$padding: 0
+	,$position: absolute
+	,$width: 1px
+){
+	border: $border;
+	clip: $clip;
+	height: $height;
+	margin: $margin;
+	overflow: $overflow;
+	padding: $padding;
+	position: $position;
+	width: $width;
+}
+%sro{
+	@include sro();
+}
+@mixin sroOff(
+	$border: initial
+	,$clip: auto
+	,$height: auto
+	,$margin: initial
+	,$overflow: visible
+	,$padding: initial
+	,$position: static
+	,$width: auto
+){
+	border: $border;
+	clip: $clip;
+	height: $height;
+	margin: $margin;
+	overflow: $overflow;
+	padding: $padding;
+	position: $position;
+	width: $width;
+}
+%sroOff{
+	@include sroOff();
+}

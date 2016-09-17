@@ -1,0 +1,32 @@
+body{
+	display: block; display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	height: 100vh;
+}
+.footer{
+	border-top: 1px solid $color-border;
+	flex-grow: 0;
+	flex-shrink: 0;
+	padding: 0.8em;
+	text-align: center;
+	@include mq('nnvp'){
+		padding: 0.5em;
+	}
+}
+main{
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	flex-shrink: 0;
+	overflow: auto;
+	.page-game &{
+		align-items: stretch;
+	}
+}
+.main-text{
+	margin: 0 auto;
+	max-width: 32em;
+	padding: 0.8em;
+}

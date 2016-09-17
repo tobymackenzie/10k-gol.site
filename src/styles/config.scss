@@ -1,0 +1,37 @@
+$bp-nnvp: 20em;
+$bp-nvp: 38em;
+@mixin mq($name){
+	@if $name == 'nvp'{
+		@media screen and (min-width: $bp-nvp){ @content; }
+	}@elseif $name == 'nnvp'{
+		@media screen and (max-width: $bp-nnvp){ @content; }
+	}
+}
+
+$color-black: black;
+$color-brightGreen: #6f6;
+$color-brown: #815128;
+$color-offBrightGreen: #4d4;
+$color-offWhite: #ddd;
+$color-white: white;
+
+$color-border: $color-white;
+$color-buttonFG: $color-black;
+$color-buttonBG: $color-offBrightGreen;
+$color-buttonBorder: $color-brown;
+$color-deadCell: $color-brown;
+$color-fieldDetail: $color-offWhite;
+$color-focusedButtonBG: $color-brightGreen;
+$color-focusedLink: $color-brightGreen;
+$color-heading: $color-brightGreen;
+$color-gameBG: $color-black;
+$color-gameFG: $color-white;
+$color-link: $color-offBrightGreen;
+$color-liveCell: $color-brightGreen;
+$color-logo: $color-white;
+$color-toby: $color-brightGreen;
+
+$baseCellDiameter: 22px;
+
+$font-base: meslo, 'Meslo LG S', menlo, 'Menlo Regular', Consolas, monospace;
+$font-heading: courier, $font-base;

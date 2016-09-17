@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+$projectRoot = __DIR__ . '/..';
+
+//--php
+foreach(Array(
+	'/'
+	,'/dist/' //--for bc
+	,'/info/'
+	,'/project/'
+) as $relDir){
+	$dir = $projectRoot . $relDir;
+	if(!is_dir($dir)){
+		mkdir($dir, 0755, true);
+	}
+	$dest = $dir . 'index.php';
+	file_put_contents(
+		$dest
+		, "<?php\nrequire(__DIR__ . '" . str_repeat('/..', substr_count($relDir, '/') - 1) . "/src/run/web.php');"
+	);
+}
+
+//--scripts
+chdir($projectRoot);
+passthru('ln -nfs ' . $projectRoot . '/src/scripts/main.js ' . $projectRoot . '/main.js');
+
+//--styles
+passthru('sass --sourcemap=none ' . $projectRoot . '/src/styles/builds/main.scss ' . $projectRoot . '/main.css');

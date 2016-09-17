@@ -1,0 +1,50 @@
+button{
+	background: $color-buttonBG;
+	border: 1px solid $color-buttonBorder;
+	border-radius: 0.2em;
+	color: $color-buttonFG;
+	font-family: inherit;
+	font-size: 1.2em;
+	padding: 0.2em 0.4em 0.3em;
+	&:focus, &:hover{
+		background: $color-focusedButtonBG;
+	}
+}
+.field{
+	margin-top: 1em;
+}
+.fieldDetail{
+	color: $color-fieldDetail;
+	display: block;
+	margin-top: 0.2em;
+	@include mq('nvp'){
+		margin-left: 17%;
+		margin-top: 0.4em;
+	}
+}
+.fieldLabel{
+	display: block;
+	margin-bottom: 0.2em;
+	@include mq('nvp'){
+		display: inline-block;
+		vertical-align: middle;
+		width: 16%;
+	}
+}
+.formSubmit{
+	margin-top: 0.6em;
+	text-align: center;
+}
+input{
+	font-family: inherit;
+	font-size: 1em;
+	vertical-align: middle;
+	width: 100%;
+	@include mq('nvp'){
+		width: 80%;
+	}
+}
+label{
+	display: block;
+	width: 100%;
+}
