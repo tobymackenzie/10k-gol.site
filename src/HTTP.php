@@ -24,7 +24,7 @@ class HTTP{
 		$this->relativeUrlBase = preg_replace('#' . $this->route . '$#', '', $url);
 
 		//--determine coookie information
-		if(isset($_COOKIE['v'])){
+		if(isset($_COOKIE['v']) && (int) $_COOKIE['v'] === $this->version){
 			$this->hasCache = true;
 		}
 	}
