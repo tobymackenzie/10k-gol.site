@@ -48,7 +48,7 @@ table{
 	padding: 0;
 	list-style: none;
 	>li{
-		display: inline-block;
+		display: inline-block; *display: inline;
 		margin: 0 0.5em;
 	}
 }

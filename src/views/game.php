@@ -6,7 +6,7 @@
 			?><li><a class="nextTick" href="<?=$this->getNextUrl()?>">Next tick</a></li><?php
 			?><li><a href="#settings">Settings</a></li><?php
 		?></ul><?php
-		?><div class="tickCount"><strong>Tick:</strong> <b><?=$game->getTick()?></b></div><?php
+		?><span class="tickCount"><strong>Tick:</strong> <b><?=$game->getTick()?></b></span><?php
 	?></div><?php
 	include(__DIR__ . '/grid.php');
 ?></div><?php
