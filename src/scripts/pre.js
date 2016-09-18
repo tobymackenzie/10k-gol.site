@@ -1,7 +1,8 @@
-(function(_d){
+(function(_w, _d){
 	//--load js if mustard cut, old browsers won't get extra weight
 	//-# mustard cut should match minimum for main.js functionality
-	if('querySelectorAll' in _d){
+	//-# js is virtually worthless for opera mini, play button bad, so don't load it
+	if('querySelectorAll' in _d && !(_w.operamini && ({}).toString.call(_w.operamini) === '[object OperaMini]')){
 		/*! loadJS: [c]2014 @scottjehl, Filament Group, Inc. Licensed MIT */
 		var _loadJS = function(_src, _cb){
 			var _ref = _d.getElementsByTagName('script')[0];
@@ -16,4 +17,4 @@
 		};
 		_loadJS(TJM.baseUrl + '/main.js');
 	}
-})(window.document);
+})(window, window.document);
