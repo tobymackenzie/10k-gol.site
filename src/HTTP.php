@@ -3,12 +3,13 @@ namespace TJM\Life10k;
 use TJM\Life10k\Game;
 
 class HTTP{
+	protected $assetVersion = 1;
 	protected $game;
 	protected $hasCache = false;
 	protected $query;
 	protected $relativeUrlBase;
 	protected $route;
-	protected $version = 1;
+
 	public function __construct($query){
 		$this->query = $query;
 
@@ -24,14 +25,14 @@ class HTTP{
 		$this->relativeUrlBase = preg_replace('#' . $this->route . '$#', '', $url);
 
 		//--determine coookie information
-		if(isset($_COOKIE['v']) && (int) $_COOKIE['v'] === $this->version){
+		if(isset($_COOKIE['v']) && (int) $_COOKIE['v'] === $this->assetVersion){
 			$this->hasCache = true;
 		}
 	}
 	public function getResponse($route = null, $query = null){
 		//--set version cookie if not set, used to affect if inlining css / scripts
 		if(!$this->hasCache){
-			// setcookie('v', $this->version,  time() + 60 * 60 * 24 * 90, $this->getRelativeUrlBase()); //-- 90 days seems reasonable
+			// setcookie('v', $this->assetVersion,  time() + 60 * 60 * 24 * 90, $this->getRelativeUrlBase()); //-- 90 days seems reasonable
 		}
 
 		if(!isset($route)){
@@ -101,7 +102,7 @@ class HTTP{
 			$jsData = Array(
 				'baseUrl'=> $this->getRelativeUrlBase()
 				,'hasCache'=> $this->hasCache
-				,'v'=> $this->version
+				,'v'=> $this->assetVersion
 			);
 			$content = "var TJM = " . json_encode($jsData) . ";"; //--config from PHP
 			$content .= file_get_contents(__DIR__ . '/../pre.js');
