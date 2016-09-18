@@ -175,13 +175,13 @@ class HTTP{
 		foreach($data as $key=> $value){
 			switch($key){
 				case 'columns':
-					if($value !== Game::DEFAULT_COLUMNS){
-						$neededData[$key] = $value;
+					if((int) $value !== Game::DEFAULT_COLUMNS){
+						$neededData[$key] = (int) $value;
 					}
 				break;
 				case 'rows':
-					if($value !== Game::DEFAULT_ROWS){
-						$neededData[$key] = $value;
+					if((int) $value !== Game::DEFAULT_ROWS){
+						$neededData[$key] = (int) $value;
 					}
 				break;
 				case 'seed':
@@ -190,8 +190,8 @@ class HTTP{
 					}
 				break;
 				case 'tick':
-					if($value !== Game::DEFAULT_TICK){
-						$neededData[$key] = $value;
+					if((int) $value !== Game::DEFAULT_TICK){
+						$neededData[$key] = (int) $value;
 					}
 				break;
 				default:
