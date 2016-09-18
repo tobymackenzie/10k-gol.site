@@ -1,0 +1,40 @@
+#!/usr/bin/env php
+<?php
+$projectRoot = __DIR__ . '/..';
+chdir($projectRoot);
+
+$commands = Array(
+	'git checkout master'
+	,'git push'
+	,'git stash'
+	,'git checkout dist'
+	,'git rebase master'
+	,'bin/build'
+	,'git commit -a --amend'
+	,'git push -f'
+	,'git checkout master'
+	,'git stash pop'
+);
+
+$return = 0;
+foreach($commands as $command){
+	if($command === 'git commit -a --amend'){
+		echo "Do you want to replace the dist commit?\n";
+		$inputHandle = fopen("php://stdin","r");
+		$input = fgets($inputHandle);
+		switch(strtolower(trim($input))){
+			case 'y':
+			case 'yes':
+			break;
+			default:
+				$return = 1;
+			break;
+		}
+		fclose($inputHandle);
+	}
+	if($return === 0){
+		echo "running {$command}\n";
+		passthru($command, $return);
+	}
+}
+
