@@ -17,6 +17,7 @@ tbody{
 	flex-direction: column;
 	flex-grow: 1;
 	height: 100%;
+	margin-bottom: 5px; //--fixes scrollbar problem in saf5, possibly ie11 / edge. gives a tiny bit of breathing room in modern
 	th{
 		position: absolute;
 		left: 0;
