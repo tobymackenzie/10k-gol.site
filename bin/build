@@ -1,45 +1,70 @@
 #!/usr/bin/env php
 <?php
 $projectRoot = __DIR__ . '/..';
+if(count($argv) > 1){
+	$tasks = array_slice($argv, 1);
+}else{
+	$tasks = Array('php', 'js', 'css');
+}
+$verbose = true;
 
-//--php
-foreach(Array(
-	'/'
-	,'/dist/' //--for bc
-	,'/info/'
-	,'/project/'
-) as $relDir){
-	$dir = $projectRoot . $relDir;
-	if(!is_dir($dir)){
-		mkdir($dir, 0755, true);
+foreach($tasks as $task){
+	switch($task){
+		case 'php':
+			if($verbose){
+				echo "building php scripts\n";
+			}
+			foreach(Array(
+				'/'
+				,'/dist/' //--for bc
+				,'/info/'
+				,'/project/'
+			) as $relDir){
+				$dir = $projectRoot . $relDir;
+				if(!is_dir($dir)){
+					mkdir($dir, 0755, true);
+				}
+				$dest = $dir . 'index.php';
+				file_put_contents(
+					$dest
+					, "<?php\nrequire(__DIR__ . '" . str_repeat('/..', substr_count($relDir, '/') - 1) . "/src/run/web.php');"
+				);
+			}
+		break;
+		case 'js':
+		case 'scripts':
+			if($verbose){
+				echo "building js scripts\n";
+			}
+			chdir($projectRoot);
+			foreach(Array(
+				Array(
+					'src'=> $projectRoot . '/src/scripts/empty-cache.js'
+					,'dest'=> $projectRoot . '/empty-cache.js'
+				)
+				,Array(
+					'src'=> $projectRoot . '/src/scripts/main.js'
+					,'dest'=> $projectRoot . '/main.js'
+				)
+				,Array(
+					'src'=> $projectRoot . '/src/scripts/pre.js'
+					,'dest'=> $projectRoot . '/pre.js'
+				)
+			) as $data){
+				$command = 'uglifyjs --compress --mangle -- ' . $data['src'] . ' > ' . $data['dest'];
+				//-# may need for newer versions of uglify --support-ie8
+				passthru($command);
+			}
+		break;
+		case 'css':
+		case 'styles':
+			if($verbose){
+				echo "building styles\n";
+			}
+			passthru('sass --sourcemap=none ' . $projectRoot . '/src/styles/builds/main.scss ' . $projectRoot . '/main.css');
+		break;
+		default:
+			echo "undefined task {$task}";
+		break;
 	}
-	$dest = $dir . 'index.php';
-	file_put_contents(
-		$dest
-		, "<?php\nrequire(__DIR__ . '" . str_repeat('/..', substr_count($relDir, '/') - 1) . "/src/run/web.php');"
-	);
 }
-
-//--scripts
-chdir($projectRoot);
-foreach(Array(
-	Array(
-		'src'=> $projectRoot . '/src/scripts/empty-cache.js'
-		,'dest'=> $projectRoot . '/empty-cache.js'
-	)
-	,Array(
-		'src'=> $projectRoot . '/src/scripts/main.js'
-		,'dest'=> $projectRoot . '/main.js'
-	)
-	,Array(
-		'src'=> $projectRoot . '/src/scripts/pre.js'
-		,'dest'=> $projectRoot . '/pre.js'
-	)
-) as $data){
-	$command = 'uglifyjs --compress --mangle -- ' . $data['src'] . ' > ' . $data['dest'];
-	//-# may need for newer versions of uglify --support-ie8
-	passthru($command);
-}
-
-//--styles
-passthru('sass --sourcemap=none ' . $projectRoot . '/src/styles/builds/main.scss ' . $projectRoot . '/main.css');
