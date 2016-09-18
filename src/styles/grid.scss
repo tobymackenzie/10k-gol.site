@@ -32,7 +32,7 @@ tbody{
 	overflow: hidden;
 	padding: 0;
 	position: relative;
-	transition: background 0.2s ease, opacity 0.1s ease, transform 0.14s ease-out;
+	transition: opacity 0.1s ease, transform 0.14s ease-out;
 	width: $baseCellDiameter; //-# needed for no-flexbox
 	&:not(:target){
 		height: 100%; //--flexbox browsers need to not have fixed height.  this works well enough for browsers not support `@supports` but is blocked from really old browsers
@@ -42,6 +42,10 @@ tbody{
 			height: auto;
 		}
 	}
+	//-!!
+	// [data-transition='transition'] &{
+	// 	transition: background 0.1s, opacity 0.1s ease, transform 0.14s ease-out;
+	// }
 	&:before{
 		background: rgb(30,30,30);
 		border-radius: 50%;

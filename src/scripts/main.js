@@ -228,9 +228,7 @@
 							_self.isTicking = true;
 							_self._applyTickDiff(_self._previousTickDiff.pop());
 							_self.setTick(_self.tick - 1);
-							setTimeout(function(){
-								_self.isTicking = false;
-							}, 200);
+							_self.isTicking = false;
 						}else{
 							//-!!! should just send back via server side refresh, handled by listener currently
 							alert('There are no more previous ticks.');
@@ -259,11 +257,7 @@
 						_self._applyTickDiff(_cellsNeedingSwitch);
 						_self._previousTickDiff.push(_cellsNeedingSwitch);
 						_self.setTick(_self.tick + 1);
-
-						//--attempt to make time for animation
-						setTimeout(function(){
-							_self.isTicking = false;
-						}, 200);
+						_self.isTicking = false;
 					}
 				}
 				,isTicking: false
