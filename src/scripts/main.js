@@ -144,7 +144,7 @@
 							if(_controlsEl.parentNode.querySelector(':hover') === _controlsEl || _controlsEl.querySelector(':hover')){
 								setTimeout(function(){ _addPlayEl(); }, 100);
 							}else{
-								_controlsEl.insertBefore(_playLiEl, _controlsEl.querySelectorAll('li')[2]);
+								_controlsEl.insertBefore(_playLiEl, _controlsEl.querySelectorAll('li')[0]);
 							}
 						};
 						_addPlayEl();
