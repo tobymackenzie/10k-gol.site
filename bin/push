@@ -19,6 +19,7 @@ $commands = Array(
 $return = 0;
 foreach($commands as $command){
 	if($command === 'git commit -a --amend'){
+		passthru('git status');
 		echo "Do you want to replace the dist commit?\n";
 		$inputHandle = fopen("php://stdin","r");
 		$input = fgets($inputHandle);
