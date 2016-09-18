@@ -24,6 +24,10 @@ foreach(Array(
 chdir($projectRoot);
 foreach(Array(
 	Array(
+		'src'=> $projectRoot . '/src/scripts/empty-cache.js'
+		,'dest'=> $projectRoot . '/empty-cache.js'
+	)
+	,Array(
 		'src'=> $projectRoot . '/src/scripts/main.js'
 		,'dest'=> $projectRoot . '/main.js'
 	)

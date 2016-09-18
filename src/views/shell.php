@@ -20,6 +20,7 @@ if($hasCache){
 		?></main><?php
 		include(__DIR__ . '/footer.php');
 		?><script><!-- --></script><?php
+//--lazy load css for no-js
 if(!$hasCache){
 		?><noscript><link href="<?=$this->getRelativeUrlBase()?>/main.css" rel="stylesheet" /></noscript><?php
 }

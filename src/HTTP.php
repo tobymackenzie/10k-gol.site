@@ -105,6 +105,9 @@ class HTTP{
 		);
 		$content = "var TJM = " . json_encode($jsData) . ";"; //--config from PHP
 		$content .= file_get_contents(__DIR__ . '/../pre.js');
+		if(!$this->hasCache){
+			$content .= file_get_contents(__DIR__ . '/../empty-cache.js');
+		}
 		$response = str_replace('<script><!-- ', "<script><!--\n" . $content . "\n", $response);
 
 		//--inject styles if not in cache
