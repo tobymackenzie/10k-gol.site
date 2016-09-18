@@ -3,14 +3,14 @@ namespace TJM\Life10k;
 use TJM\Life10k\Game;
 
 class HTTP{
-	protected $data;
 	protected $game;
 	protected $hasCache = false;
+	protected $query;
 	protected $relativeUrlBase;
 	protected $route;
 	protected $version = 1;
-	public function __construct($data){
-		$this->data = $data;
+	public function __construct($query){
+		$this->query = $query;
 
 		//--determine url information
 		$url = explode('?', $_SERVER['REQUEST_URI']);
@@ -28,7 +28,7 @@ class HTTP{
 			$this->hasCache = true;
 		}
 	}
-	public function getResponse($route = null, $data = null){
+	public function getResponse($route = null, $query = null){
 		//--set version cookie if not set, used to affect if inlining css / scripts
 		if(!$this->hasCache){
 			// setcookie('v', $this->version,  time() + 60 * 60 * 24 * 90, $this->getRelativeUrlBase()); //-- 90 days seems reasonable
@@ -37,21 +37,21 @@ class HTTP{
 		if(!isset($route)){
 			$route = $this->route;
 		}
-		if(!isset($data)){
-			$data = $this->data;
+		if(!isset($query)){
+			$query = $this->query;
 		}
 		switch(rtrim($route, '/')){
 			case '':
-				$pageData = $this->getGamePageData($data);
+				$pageData = $this->getGamePageData($query);
 			break;
 			case '/dist': //--here for BC
 				$this->redirect($this->getRelativeUrlBase());
 			break;
 			case '/info':
-				$pageData = $this->getInfoPageData($data);
+				$pageData = $this->getInfoPageData($query);
 			break;
 			case '/project':
-				$pageData = $this->getProjectPageData($data);
+				$pageData = $this->getProjectPageData($query);
 			break;
 		}
 
@@ -164,7 +164,7 @@ class HTTP{
 		if(!$game){
 			$game = $this->game;
 		}
-		$data = array_merge($this->data, Array(
+		$data = array_merge($this->query, Array(
 			'columns'=> $game->getColumnCount()
 			,'rows'=> $game->getRowCount()
 			,'seed'=> $game->getSeed()
