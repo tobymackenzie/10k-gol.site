@@ -28,13 +28,21 @@ tbody{
 	border-radius: 45%;
 	display: inline-block;
 	flex-basis: 100%;
-	height: $baseCellDiameter; //-# needed for no-flexbox
+	height: $baseCellDiameter; //-# needed for no-flexbox. set to fixed value for really old browsers like ie5
 	opacity: 0.8;
 	overflow: hidden;
 	padding: 0;
 	position: relative;
 	transition: background 0.2s ease, opacity 0.1s ease, transform 0.14s ease-out;
 	width: $baseCellDiameter; //-# needed for no-flexbox
+	&:not(:target){
+		height: 100%; //--flexbox browsers need to not have fixed height.  this works well enough for browsers not support `@supports` but is blocked from really old browsers
+	}
+	@supports (display: flex){
+		&.c{ //--overcome `:not` hack above
+			height: auto;
+		}
+	}
 	&:before{
 		background: rgb(30,30,30);
 		border-radius: 50%;
@@ -50,9 +58,6 @@ tbody{
 	}
 	&:hover{
 		opacity: 1;
-	}
-	@supports (display: flex){
-		height: auto;
 	}
 	abbr{
 		display: block;
