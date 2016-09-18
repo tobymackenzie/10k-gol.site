@@ -5,7 +5,6 @@ table{
 	flex-shrink: 1;
 	margin: 0 auto; //--for no-flex
 	overflow: auto; //--scroll bar for old browsers smaller than grid
-	z-index: 1;
 	@supports (display: flex){
 		width: 100%; //--without this, margin auto causes width to shrink
 	}
