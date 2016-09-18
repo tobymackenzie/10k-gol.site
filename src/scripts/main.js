@@ -133,6 +133,28 @@
 					if(!_self.tickCountEl){
 						_self.tickCountEl = this.el.querySelector('.tickCount b');
 					}
+					if(!_self.playEl){
+						var _playLiEl = _d.createElement('li');
+						_playLiEl.innerHTML = '<button class="playA">Play</button> '; //-# trailing whitespace since `insertBefore` doesn't add one outside the `li`
+						_self.playEl = _playLiEl.querySelector('button');
+						//--only add if we're not hovering the controls, so user is less likely to be trying to press something
+						//-@ http://stackoverflow.com/a/14800287/1139122
+						var _addPlayEl = function(){
+							var _controlsEl = _self.controlsEl;
+							if(_controlsEl.parentNode.querySelector(':hover') === _controlsEl || _controlsEl.querySelector(':hover')){
+								setTimeout(function(){ _addPlayEl(); }, 100);
+							}else{
+								_controlsEl.insertBefore(_playLiEl, _controlsEl.querySelectorAll('li')[2]);
+							}
+						};
+						_addPlayEl();
+					}
+					if(_self.playEl){
+						_self.playEl.addEventListener('click', function(){
+							_self.togglePlay();
+						});
+						_self.el.setAttribute('data-playing', 'stopped');
+					}
 				}
 				,columns: undefined
 				,controlsEl: undefined
@@ -159,6 +181,32 @@
 				,rows: undefined
 				,tick: undefined
 				,tickCountEl: undefined
+
+				//--play
+				,interval: 600
+				,isPlaying: false
+				,playEl: undefined
+				,togglePlay: function(){
+					var _self = this;
+					if(_self.isPlaying){
+						_self.el.setAttribute('data-playing', 'stopped');
+						_self.playEl.innerHTML = 'Play';
+						if(_self._timeout){
+							_w.clearTimeout(_self._timeout);
+						}
+						_self.isPlaying = false;
+					}else{
+						_self.el.setAttribute('data-playing', 'playing');
+						_self.playEl.innerHTML = 'Stop';
+						var _play = function(){
+							_self.incrementTick();
+							_self._timeout = _w.setTimeout(_play, _self.interval);
+						};
+						_play();
+						_self.isPlaying = true;
+					}
+				}
+				,_timeout: undefined
 
 				//--ticking
 				,_previousTickDiff: undefined
