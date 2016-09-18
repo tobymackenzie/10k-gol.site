@@ -97,17 +97,15 @@ class HTTP{
 		//---strip extra whitespace
 		$response = preg_replace('/\s{2,}/', ' ', $response);
 
-		//--inject scripts if not in cache
-		if(!$this->hasCache){
-			$jsData = Array(
-				'baseUrl'=> $this->getRelativeUrlBase()
-				,'hasCache'=> $this->hasCache
-				,'v'=> $this->assetVersion
-			);
-			$content = "var TJM = " . json_encode($jsData) . ";"; //--config from PHP
-			$content .= file_get_contents(__DIR__ . '/../pre.js');
-			$response = str_replace('<script><!-- ', "<script><!--\n" . $content . "\n", $response);
-		}
+		//--inject loading scripts
+		$jsData = Array(
+			'baseUrl'=> $this->getRelativeUrlBase()
+			,'hasCache'=> $this->hasCache
+			,'v'=> $this->assetVersion
+		);
+		$content = "var TJM = " . json_encode($jsData) . ";"; //--config from PHP
+		$content .= file_get_contents(__DIR__ . '/../pre.js');
+		$response = str_replace('<script><!-- ', "<script><!--\n" . $content . "\n", $response);
 
 		//--inject styles if not in cache
 		if(!$this->hasCache){
