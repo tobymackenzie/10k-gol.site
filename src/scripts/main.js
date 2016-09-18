@@ -26,6 +26,14 @@
 					}
 				}
 			)
+			,addListener:  (function(){
+				var _nativeAddListener = _d.addEventListener || (_d.attachEvent && function(_name, _cb){ this.attachEvent('on' + _name, _cb); }) || function(_name, _cb){
+					this['on' + _name] = _cb;
+				};
+				return function(_elm, _name, _cb, _capt){
+					return _nativeAddListener.call(_elm, _name, _cb, _capt || false/*-# ff6- */);
+				};
+			})()
 			//-@ http://stackoverflow.com/a/29751897/1139122
 			,hasClass: (_supportsClassList
 				? function(_el, _class){
@@ -35,6 +43,16 @@
 					return new RegExp('\\b' + _class).exec(_el.className);
 				}
 			)
+			,preventDefault: function(_event){
+				//if(!_event){
+				//	_event = _w.event;
+				//}
+				if(_event.preventDefault){
+					_event.preventDefault();
+				}else{
+					_event.returnValue = false;
+				}
+			}
 			,removeClass: (_supportsClassList
 				? function(_el, _class){
 					_el.classList.remove(_class);
@@ -109,15 +127,15 @@
 						_self.controlsEl = _d.querySelector('.gameControls');
 					}
 					_self.previousAction = _self.controlsEl.querySelector('.previousTick');
-					_self.previousAction.addEventListener('click', function(_event){
+					__Els.addListener(_self.previousAction, 'click', function(_event){
 						if(_self._previousTickDiff.length){
-							_event.preventDefault();
+							__Els.preventDefault(_event);
 							_self.decrementTick();
 						}
 					});
 					_self.nextAction = _self.controlsEl.querySelector('.nextTick');
-					_self.nextAction.addEventListener('click', function(_event){
-						_event.preventDefault();
+					__Els.addListener(_self.nextAction, 'click', function(_event){
+						__Els.preventDefault(_event);
 						_self.incrementTick();
 					});
 
@@ -150,7 +168,7 @@
 						_addPlayEl();
 					}
 					if(_self.playEl){
-						_self.playEl.addEventListener('click', function(){
+						__Els.addListener(_self.playEl, 'click', function(){
 							_self.togglePlay();
 						});
 						_self.el.setAttribute('data-playing', 'stopped');
