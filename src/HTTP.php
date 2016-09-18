@@ -32,7 +32,7 @@ class HTTP{
 	public function getResponse($route = null, $query = null){
 		//--set version cookie if not set, used to affect if inlining css / scripts
 		if(!$this->hasCache){
-			// setcookie('v', $this->assetVersion,  time() + 60 * 60 * 24 * 90, $this->getRelativeUrlBase()); //-- 90 days seems reasonable
+			setcookie('v', $this->assetVersion,  time() + 60 * 60 * 24 * 90, $this->getRelativeUrlBase()); //-- 90 days seems reasonable
 		}
 
 		if(!isset($route)){
