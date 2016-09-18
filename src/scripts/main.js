@@ -216,7 +216,7 @@
 					}
 				}
 				,setTick: function(_value){
-					this.tick = _value;
+					this.tick = _w.parseInt(_value, 10);
 					if(this.tickCountEl){
 						this.tickCountEl.innerHTML = this.tick;
 					}
