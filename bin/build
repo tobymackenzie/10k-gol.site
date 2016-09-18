@@ -1,5 +1,14 @@
 #!/usr/bin/env php
 <?php
+/*
+requires installing of:
+- for this script: php
+- for js: node npm
+	sudo npm install -g uglifyjs
+- for css: node npm sass postcss-cli autoprefixer cssnano
+	sudo npm install -g postcss-cli autoprefixer cssnano
+
+*/
 $projectRoot = __DIR__ . '/..';
 if(count($argv) > 1){
 	$tasks = array_slice($argv, 1);
@@ -61,7 +70,12 @@ foreach($tasks as $task){
 			if($verbose){
 				echo "building styles\n";
 			}
-			passthru('sass --sourcemap=none ' . $projectRoot . '/src/styles/builds/main.scss ' . $projectRoot . '/main.css');
+			$command =
+				'sass --sourcemap=none ' . $projectRoot . '/src/styles/builds/main.scss'
+				. ' | postcss -c ' . $projectRoot . '/postcss.json --trace'
+				. ' > ' . $projectRoot . '/main.css'
+			;
+			passthru($command);
 		break;
 		default:
 			echo "undefined task {$task}";
