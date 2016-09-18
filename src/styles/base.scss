@@ -1,11 +1,14 @@
 *{
 	box-sizing: border-box;
 }
-a{
+%link{
 	color: $color-link;
 	&:focus, &:hover{
 		color: $color-focusedLink;
 	}
+}
+a{
+	@extend %link;
 }
 body, html{
 	margin: 0;
