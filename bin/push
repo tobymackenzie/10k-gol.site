@@ -4,15 +4,20 @@ $projectRoot = __DIR__ . '/..';
 chdir($projectRoot);
 
 $commands = Array(
-	'git checkout master'
+	'git checkout src'
 	,'git push'
 	,'git stash'
 	,'git checkout dist'
-	,'git rebase master'
+	,'git rebase src'
 	,'bin/build'
 	,'git commit -a --amend'
 	,'git push -f'
 	,'git checkout master'
+	,'git rebase dist'
+	,'git reset --hard HEAD~1'
+	,'git rebase dist'
+	,'git push -f'
+	,'git checkout src'
 	,'git stash pop'
 );
 
