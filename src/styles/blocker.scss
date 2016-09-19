@@ -16,14 +16,14 @@
 	b{
 		@extend %sro;
 	}
+	&:hover{
+		opacity: 0.1;
+	}
 	&:focus{
 		opacity: 0.9;
 		z-index: 1000;
 		b{
 			@extend %sroOff;
 		}
-	}
-	&:hover{
-		opacity: 0.1;
 	}
 }
