@@ -411,7 +411,7 @@
 						_self._escapeListener = function(_event){
 							var _escape = false;
 							if('key' in _event){
-								_escape = (_event.key === 'Escape');
+								_escape = (_event.key === 'Escape' || _event.key === 'Esc');
 							}else{
 								_escape = _event.keyCode === 27;
 							}
