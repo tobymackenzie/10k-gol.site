@@ -43,6 +43,9 @@
 					return new RegExp('\\b' + _class).exec(_el.className);
 				}
 			)
+			,isEventModified: function(_event){
+				return !!(_event.ctrlKey || _event.metaKey || _event.altKey || _event.shiftKey);
+			}
 			,preventDefault: function(_event){
 				//if(!_event){
 				//	_event = _w.event;
@@ -128,15 +131,17 @@
 					}
 					_self.previousAction = _self.controlsEl.querySelector('.previousTick');
 					__Els.addListener(_self.previousAction, 'click', function(_event){
-						if(_self._previousTickDiff.length){
+						if(_self._previousTickDiff.length && !__Els.isEventModified(_event)){
 							__Els.preventDefault(_event);
 							_self.decrementTick();
 						}
 					});
 					_self.nextAction = _self.controlsEl.querySelector('.nextTick');
 					__Els.addListener(_self.nextAction, 'click', function(_event){
-						__Els.preventDefault(_event);
-						_self.incrementTick();
+						if(!__Els.isEventModified(_event)){
+							__Els.preventDefault(_event);
+							_self.incrementTick();
+						}
 					});
 
 					//--determine tick
