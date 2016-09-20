@@ -34,12 +34,16 @@
 				}
 			)
 			,addListener:  (function(){
-				var _nativeAddListener = _d.addEventListener || (_d.attachEvent && function(_name, _cb){ this.attachEvent('on' + _name, _cb); }) || function(_name, _cb){
-					this['on' + _name] = _cb;
-				};
-				return function(_elm, _name, _cb, _capt){
-					return _nativeAddListener.call(_elm, _name, _cb, _capt || false/*-# ff6- */);
-				};
+				return (_d.addEventListener && function(_elm, _name, _cb, _capt){
+						_elm.addEventListener(_name, _cb, _capt || false/*-# ff6- */);
+					}) //-# must use pass through for `addEventListener()` because IE can't use `Element`'s implementation for `window`
+					|| (_d.attachEvent && function(_elm, _name, _cb){
+						_elm.attachEvent('on' + _name, _cb);
+					})
+					|| function(_elm, _name, _cb){
+						_elm['on' + _name] = _cb;
+					}
+				;
 			})()
 			//-@ http://stackoverflow.com/a/29751897/1139122
 			,hasClass: (_supportsClassList
