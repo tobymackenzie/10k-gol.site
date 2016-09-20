@@ -36,3 +36,8 @@ $baseCellDiameter: 22px;
 
 $font-base: meslo, 'Meslo LG S', menlo, 'Menlo Regular', Consolas, monospace;
 $font-heading: courier, $font-base;
+
+$z-back: -2;
+$z-front: 100;
+$z-behindFront: $z-front - 1;
+$z-forceFront: 1000;

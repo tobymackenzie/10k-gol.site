@@ -7,7 +7,7 @@
 	top: 0;
 	transition: opacity 0.2s ease;
 	width: 100%;
-	z-index: 99;
+	z-index: $z-behindFront;
 	:target ~ &{
 		background: $color-gameBG;
 		display: block;
@@ -21,7 +21,7 @@
 	}
 	&:focus{
 		opacity: 0.9;
-		z-index: 1000;
+		z-index: $z-forceFront;
 		b{
 			@extend %sroOff;
 		}
