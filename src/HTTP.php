@@ -14,8 +14,34 @@ class HTTP{
 		$this->query = $query;
 
 		//--determine url information
-		$url = explode('?', $_SERVER['REQUEST_URI']);
-		$url = $url[0];
+		//-# elseifs are for IIS
+		//-@ https://developer.wordpress.org/reference/functions/wp_fix_server_vars/
+		if(isset($_SERVER['REQUEST_URI'])){
+			$url = $_SERVER['REQUEST_URI'];
+		}elseif(isset($_SERVER['HTTP_X_ORIGINAL_URL'])){
+			$url = $_SERVER['HTTP_X_ORIGINAL_URL'];
+		}elseif(isset($_SERVER['PHP_SELF'])){
+			$url = str_replace('/index.php', '', $_SERVER['PHP_SELF']);
+		}else{
+			if(isset($_SERVER['pathInfo'])){
+				$pathInfo = $_SERVER['pathInfo'];
+			}elseif(isset($_SERVER['ORIG_PATH_INFO'])){
+				$pathInfo = $_SERVER['ORIG_PATH_INFO'];
+			}
+			if(isset($pathInfo)){
+				if($pathInfo === $_SERVER['SCRIPT_NAME']){
+					$url = $pathInfo;
+				}else{
+					$url = $_SERVER['SCRIPT_NAME'] . $pathInfo;
+				}
+			}else{
+				$url = str_replace('/index.php', '', $_SERVER['PHP_SELF']);
+			}
+		}
+		if(strpos($url, '?') !== false){
+			$url = explode('?', $url);
+			$url = $url[0];
+		}
 		if(substr($url, -1) === '/'){
 			$url = substr($url, 0, -1);
 		}
