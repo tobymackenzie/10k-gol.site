@@ -71,6 +71,16 @@
 					_el.className = _el.className.replace(new RegExp('\\b' + _class, 'g'), '');
 				}
 			)
+			,removeListener:  (function(){
+				var _nativeRemoveListener = _d.removeEventListener || (_d.detachEvent && function(_name, _cb){ this.detachEvent('on' + _name, _cb); }) || function(_name, _cb){
+					if(this['on' + _name] === _cb){
+						this['on' + _name] = _u;
+					}
+				};
+				return function(_elm, _name, _cb, _capt){
+					return _nativeRemoveListener.call(_elm, _name, _cb, _capt || false/*-# ff6- */);
+				};
+			})()
 		};
 	})(_d.body);
 
@@ -338,6 +348,85 @@
 				var _game = new _Game({
 					el: _gameEl
 					,gridEl: _d.getElementById('grid')
+				});
+			}
+		}
+	})();
+
+	//--pane
+	(function(){
+		if('querySelectorAll' in _d && 'onhashchange' in _w){
+			var _Panes = __Classes.create({
+				_init: function(){
+					var _self = this;
+					_self._parent.apply(_self, arguments);
+					__Els.addListener(_w, 'hashchange', function(){
+						_self.checkHash();
+					});
+					_self.checkHash();
+				}
+				//--attach escape listener when pane is open
+				,checkHash: function(){
+					var _self = this;
+					var _hash = _w.location.hash.replace(/^#/,'');
+					if(_hash){
+						//--make sure hash matches a pane
+						var _found = false;
+						for(var _iEls = 0; _iEls < _self.els.length; ++_iEls){
+							if(_self.els[_iEls].id === _hash){
+								_found = true;
+							}
+						}
+						if(_found){
+							_self.isOpen = _self.isListeningForEscape = true;
+							__Els.addListener(_d.body, 'keyup', _self.getEscapeListener());
+						}else{
+							_self.close();
+						}
+					}else{
+						_self.close();
+					}
+				}
+				,close: function(){
+					var _self = this;
+					if(_self.isOpen){
+						_self.isOpen = false;
+						_w.location.hash = '#';
+					}
+					if(_self.isListeningForEscape && _self._escapeListener){
+						_self.isListeningForEscape = false;
+						__Els.removeListener(_d.body, 'keyup', _self._escapeListener);
+					}
+				}
+				,els: _u
+				,_escapeListener: _u
+				,getEscapeListener: function(){
+					var _self = this;
+					if(!_self._escapeListener){
+						//--close on press of escape key
+						_self._escapeListener = function(_event){
+							var _escape = false;
+							if('key' in _event){
+								_escape = (_event.key === 'Escape');
+							}else{
+								_escape = _event.keyCode === 27;
+							}
+							if(_escape){
+								_self.close();
+							}
+						};
+					}
+					return _self._escapeListener;
+				}
+				,isOpen: false
+				,isListeningForEscape: false
+			});
+
+			//--init
+			var _paneEls = _d.querySelectorAll('.pane');
+			if(_paneEls && _paneEls.length){
+				new _Panes({
+					els: _paneEls
 				});
 			}
 		}
