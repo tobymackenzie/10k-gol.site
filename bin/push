@@ -13,7 +13,6 @@ $commands = Array(
 	,'git commit -a --amend'
 	,'git push -f'
 	,'git checkout master'
-	,'git rebase dist'
 	,'git reset --hard HEAD~1'
 	,'git rebase dist'
 	,'git push -f'
