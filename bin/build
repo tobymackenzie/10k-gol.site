@@ -34,9 +34,12 @@ foreach($tasks as $task){
 					mkdir($dir, 0755, true);
 				}
 				$dest = $dir . 'index.php';
+				$fileContents = "<?php\n";
+				$fileContents .= "\$route = '{$relDir}';\n";
+				$fileContents .= "require(__DIR__ . '" . str_repeat('/..', substr_count($relDir, '/') - 1) . "/src/run/web.php');";
 				file_put_contents(
 					$dest
-					, "<?php\nrequire(__DIR__ . '" . str_repeat('/..', substr_count($relDir, '/') - 1) . "/src/run/web.php');"
+					, $fileContents
 				);
 			}
 		break;
