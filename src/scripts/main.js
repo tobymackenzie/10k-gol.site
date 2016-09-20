@@ -1,4 +1,4 @@
-(function(_w, _d, undefined){
+(function(_w, _d, _u){
 	//--extend
 	var __extend = function mergeInto(){
 		var _args = arguments;
@@ -179,9 +179,9 @@
 						_self.el.setAttribute('data-playing', 'stopped');
 					}
 				}
-				,columns: undefined
-				,controlsEl: undefined
-				,el: undefined
+				,columns: _u
+				,controlsEl: _u
+				,el: _u
 				,getAliveNeighborCount: function(_row, _column){
 					var _count = 0;
 					for(var _iRow = (_row > 0 ? _row - 1 : _row); _iRow <= _row + 1 && _iRow < this.rows; ++_iRow
@@ -194,21 +194,21 @@
 					}
 					return _count;
 				}
-				,gridEl: undefined
+				,gridEl: _u
 				,getCell: function(_row, _column){
 					return this.grid[_row][_column];
 				}
-				,grid: undefined
-				,nextAction: undefined
-				,previousAction: undefined
-				,rows: undefined
-				,tick: undefined
-				,tickCountEl: undefined
+				,grid: _u
+				,nextAction: _u
+				,previousAction: _u
+				,rows: _u
+				,tick: _u
+				,tickCountEl: _u
 
 				//--play
 				,interval: 600
 				,isPlaying: false
-				,playEl: undefined
+				,playEl: _u
 				,togglePlay: function(){
 					var _self = this;
 					if(_self.isPlaying){
@@ -229,10 +229,10 @@
 						_self.isPlaying = true;
 					}
 				}
-				,_timeout: undefined
+				,_timeout: _u
 
 				//--ticking
-				,_previousTickDiff: undefined
+				,_previousTickDiff: _u
 				,_applyTickDiff: function(_diff){
 					for(var _iCells = 0; _iCells < _diff.length; ++_iCells){
 						_diff[_iCells].switchAlive();
@@ -295,8 +295,8 @@
 						this.abbrEl = this.el.querySelector('abbr');
 					}
 				}
-				,abbrEl: undefined
-				,alive: undefined
+				,abbrEl: _u
+				,alive: _u
 				,setAlive: function(_state){
 					if(_state !== this.alive){
 						this.alive = _state;
@@ -322,7 +322,7 @@
 				,switchAlive: function(){
 					return this.setAlive(!this.alive);
 				}
-				,el: undefined
+				,el: _u
 			});
 
 			//--init
