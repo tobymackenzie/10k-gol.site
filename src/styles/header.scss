@@ -23,11 +23,11 @@
 	>b{
 		text-decoration: underline;
 	}
-	>b + b{
+	>i{
 		color: $color-toby;
 		display: inline-block;
 		font-size: 0.9em;
-		text-decoration: none;
+		font-style: normal;
 		transform: rotate(0);
 		transition: transform 0.5s ease;
 		vertical-align: middle;
@@ -36,7 +36,7 @@
 		}
 	}
 	&:focus, &:hover{
-		>b + b{
+		>i{
 			color: $color-logo;
 		}
 	}
