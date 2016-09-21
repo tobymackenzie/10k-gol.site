@@ -78,11 +78,12 @@ tbody{
 		&:hover{
 			transform: scalex(0.9) scaley(0.6);
 		}
-		[data-active='active'][data-wiggle='wiggle'] &{
-			animation: wiggleCellA 0.8s infinite;
-			animation: wiggleCellB 0.8s infinite;
-			will-change: opacity transform;
-		}
+		//-!! for wiggle
+		// [data-active='active'][data-wiggle='wiggle'] &{
+		// 	animation: wiggleCellA 0.8s infinite;
+		// 	animation: wiggleCellB 0.8s infinite;
+		// 	will-change: opacity transform;
+		// }
 	}
 	&.dead{
 		background: $color-deadCell;
@@ -138,46 +139,47 @@ tbody{
 		width: 50%;
 	}
 }
-@keyframes wiggleCellA{
-	0%{
-		transform: scale(1) skewX(0) skewY(0);
-	}
-	20%{
-		transform: scale(0.95) skewX(5deg) skewY(-3deg);
-	}
-	40%{
-		transform: scale(0.97) skewX(-8deg) skewY(4deg);
-	}
-	60%{
-		transform: scale(0.99) skewX(2deg) skewY(0);
-	}
-	80%{
-		transform: scale(0.94) skewX(6deg) skewY(-2deg);
-	}
-	100%{
-		transform: scale(1) skewX(0) skewY(0);
-	}
-}
-@keyframes wiggleCellB{
-	0%{
-		transform: scale(1) rotate(0);
-	}
-	20%{
-		transform: scale(0.95) rotate(4deg);
-	}
-	40%{
-		transform: scale(0.97) rotate(-8deg);
-	}
-	60%{
-		transform: scale(0.99) rotate(2deg);
-	}
-	80%{
-		transform: scale(0.94) rotate(-5deg);
-	}
-	100%{
-		transform: scale(1) rotate(0);
-	}
-}
+//-!! for wiggle
+// @keyframes wiggleCellA{
+// 	0%{
+// 		transform: scale(1) skewX(0) skewY(0);
+// 	}
+// 	20%{
+// 		transform: scale(0.95) skewX(5deg) skewY(-3deg);
+// 	}
+// 	40%{
+// 		transform: scale(0.97) skewX(-8deg) skewY(4deg);
+// 	}
+// 	60%{
+// 		transform: scale(0.99) skewX(2deg) skewY(0);
+// 	}
+// 	80%{
+// 		transform: scale(0.94) skewX(6deg) skewY(-2deg);
+// 	}
+// 	100%{
+// 		transform: scale(1) skewX(0) skewY(0);
+// 	}
+// }
+// @keyframes wiggleCellB{
+// 	0%{
+// 		transform: scale(1) rotate(0);
+// 	}
+// 	20%{
+// 		transform: scale(0.95) rotate(4deg);
+// 	}
+// 	40%{
+// 		transform: scale(0.97) rotate(-8deg);
+// 	}
+// 	60%{
+// 		transform: scale(0.99) rotate(2deg);
+// 	}
+// 	80%{
+// 		transform: scale(0.94) rotate(-5deg);
+// 	}
+// 	100%{
+// 		transform: scale(1) rotate(0);
+// 	}
+// }
 tr{
 	align-items: stretch;
 	display: block; display: flex;
