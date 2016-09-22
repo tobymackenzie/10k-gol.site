@@ -62,6 +62,7 @@ foreach($commands as $command){
 				if($stashed){
 					$return = runCommand('git stash pop');
 				}
+			break;
 			default:
 				$return = runCommand($command);
 			break;
