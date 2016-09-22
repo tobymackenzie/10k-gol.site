@@ -20,9 +20,9 @@ if($hasCache){
 		?></main><?php
 		include(__DIR__ . '/footer.php');
 		?><script><!-- --></script><?php
-//--lazy load css for no-js
+//--lazy load css for no-js.  use fake media attribute to load non-blocking and not apply to page
 if(!$hasCache){
-		?><noscript><link href="<?=$this->getRelativeUrlBase()?>/main.css" rel="stylesheet" /></noscript><?php
+		?><noscript><link href="<?=$this->getRelativeUrlBase()?>/delay.php" rel="stylesheet" media="only x" /></noscript><?php
 }
 	?></body><?php
 ?></html>
