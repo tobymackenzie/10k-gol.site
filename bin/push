@@ -10,7 +10,7 @@ $commands = Array(
 	,'git checkout dist'
 	,'git rebase src'
 	,'bin/build'
-	,'git commit -a --amend'
+	,'{{commit}}'
 	,'git push -f'
 	,'git checkout master'
 	,'git reset --hard HEAD~1'
@@ -22,16 +22,22 @@ $commands = Array(
 
 $return = 0;
 foreach($commands as $command){
-	if($command === 'git commit -a --amend'){
+	if($command === '{{commit}}'){
 		passthru('git status');
-		echo "Do you want to replace the dist commit?\n";
+		echo "Do you want to commit this dist?\n";
 		$inputHandle = fopen("php://stdin","r");
 		$input = fgets($inputHandle);
 		switch(strtolower(trim($input))){
 			case 'y':
 			case 'yes':
+				$command = 'git commit -a -m "build dist"';
+			break;
+			case 'a':
+			case 'amend':
+				$command = 'git commit -a --amend --no-edit';
 			break;
 			default:
+				echo "cancelling";
 				$return = 1;
 			break;
 		}
