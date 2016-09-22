@@ -4,10 +4,10 @@
 		?><p>Run through iterations looking for patterns.  See how different seeds affect the patterns.  Larger grids can be more interesting, but slower to run.</p><?php
 		?><div class="field"><?php
 			?><label>
-				<span class="fieldLabel">Tick</span>
-				<input name="tick" type="number" value="<?=$game->getTick()?>" />
+				<span class="fieldLabel">Seed</span>
+				<input name="seed" type="text" value="<?=$game->getSeed()?>" />
 			</label>
-			<span class="fieldDetail">(iterations or generations the game has run)</span><?php
+			<span class="fieldDetail">(affects starting set-up)</span><?php
 		?></div><?php
 		?><div class="field"><?php
 			?><label>
@@ -23,10 +23,10 @@
 		?></div><?php
 		?><div class="field"><?php
 			?><label>
-				<span class="fieldLabel">Seed</span>
-				<input name="seed" type="text" value="<?=$game->getSeed()?>" />
+				<span class="fieldLabel">Tick</span>
+				<input name="tick" type="number" value="<?=$game->getTick()?>" />
 			</label>
-			<span class="fieldDetail">(affects starting set-up)</span><?php
+			<span class="fieldDetail">(iterations or generations the game has run)</span><?php
 		?></div><?php
 		?><div class="formSubmit"><button type="submit">Change</button></div><?php
 	?></form><?php
