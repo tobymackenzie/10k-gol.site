@@ -1,6 +1,7 @@
 <div class="pane" id="settings"><?php
 	?><form class="gridSettings"><?php
 		?><h2>Grid Settings</h2><?php
+		?><p>Run through iterations looking for patterns.  See how different seeds affect the patterns.  Larger grids can be more interesting, but slower to run.</p><?php
 		?><div class="field"><?php
 			?><label>
 				<span class="fieldLabel">Tick</span>
