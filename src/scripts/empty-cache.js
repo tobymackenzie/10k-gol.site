@@ -12,6 +12,6 @@
 		_neighbor.parentNode.insertBefore(_link, _neighbor);
 	};
 	setTimeout(function(){
-		_cacheCSS(TJM.baseUrl + '/main.css');
+		_cacheCSS(TJM.baseUrl + '/main.css?v=' + TJM.v);
 	}, 200);
 })(window.document);

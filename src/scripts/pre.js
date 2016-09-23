@@ -15,6 +15,6 @@
 			}
 			return _script;
 		};
-		_loadJS(TJM.baseUrl + '/main.js');
+		_loadJS(TJM.baseUrl + '/main.js?v=' + TJM.v);
 	}
 })(window, window.document);

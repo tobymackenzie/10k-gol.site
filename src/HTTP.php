@@ -216,6 +216,9 @@ class HTTP{
 			. ($_SERVER['SERVER_NAME'] ? $_SERVER['SERVER_NAME'] : $_SERVER['PWD'])
 		;
 	}
+	public function getAssetUrl($asset){
+		return $this->getRelativeUrlBase() . '/' . $asset . '?v=' . $this->assetVersion;
+	}
 	public function getNextUrl($game = null){
 		if(!$game){
 			$game = $this->game;
