@@ -18,6 +18,19 @@ body{
 		padding: 0.5em;
 	}
 }
+.footerA{
+	>i{
+		@extend %spinMove;
+		color: $color-toby;
+		text-decoration: underline; //-# loses underline from `display:block`
+	}
+	&:focus, &:hover{
+		>i{
+			@extend %spinMoveAction;
+			color: $color-focusedLink;
+		}
+	}
+}
 main{
 	align-items: center;
 	display: flex;

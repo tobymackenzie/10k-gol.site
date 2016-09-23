@@ -64,6 +64,14 @@ table{
 		}
 	}
 }
+%spinMove{
+	display: inline-block;
+	transform: rotate(0);
+	transition: transform 0.5s ease;
+}
+%spinMoveAction{
+	transform: rotate(-720deg);
+}
 @mixin sro(
 	$border: 0
 	,$clip: rect(0 0 0 0)

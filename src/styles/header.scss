@@ -26,19 +26,15 @@
 		text-decoration: underline;
 	}
 	>i{
-		color: $color-toby;
-		display: inline-block;
+		@extend %spinMove;
+		color: $color-logoAlt;
 		font-size: 0.9em;
 		font-style: normal;
-		transform: rotate(0);
-		transition: transform 0.5s ease;
 		vertical-align: middle;
-		&:hover{
-			transform: rotate(-720deg);
-		}
 	}
 	&:focus, &:hover{
 		>i{
+			@extend %spinMoveAction;
 			color: $color-logo;
 		}
 	}
