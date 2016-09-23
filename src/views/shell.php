@@ -2,7 +2,7 @@
 <html<?php if($id){ ?> class="page-<?=$id?>"<?php } ?> lang="en"><?php
 	?><head><?php
 		?><meta charset="utf-8" /><?php
-		?><title>Conway's Game of Life (10k) - &lt;toby&gt;</title><?php
+		?><title><?=(isset($title) ? $title . ' - ' : '')?>Conway's Game of Life (10k) - &lt;toby&gt;</title><?php
 		?><meta content="initial-scale=1,width=device-width" name="viewport" /><?php
 if($hasCache){
 		?><link href="<?=$this->getAssetUrl('main.css')?>" rel="stylesheet" /><?php
