@@ -3,7 +3,7 @@ namespace TJM\Life10k;
 use TJM\Life10k\Game;
 
 class HTTP{
-	protected $assetVersion = 1;
+	protected $assetVersion = 2;
 	protected $game;
 	protected $hasCache = false;
 	protected $query;
