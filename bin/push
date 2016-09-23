@@ -48,7 +48,6 @@ foreach($commands as $command){
 						break;
 					}
 					fclose($inputHandle);
-					$return = runCommand($command);
 				}
 			break;
 			case '{{stash}}':
