@@ -227,7 +227,7 @@
 				,tickCountEl: _u
 
 				//--play
-				,interval: 600
+				,interval: 200 //-# seems to be a good comfortable spot between looking cool and being able to tell what's going on
 				,isPlaying: false
 				,playEl: _u
 				,togglePlay: function(){
@@ -244,6 +244,7 @@
 						_self.playEl.innerHTML = 'Stop';
 						var _play = function(){
 							_self.incrementTick();
+							//-# repeatedly set timeout instead of use interval so we can't tick faster than the browser can carry out tick increment logic
 							_self._timeout = _w.setTimeout(_play, _self.interval);
 						};
 						_play();
