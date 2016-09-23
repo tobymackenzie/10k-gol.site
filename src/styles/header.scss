@@ -11,12 +11,14 @@
 .logo{
 	color: $color-logo;
 	display: inline-block;
-	font-size: 1.2em;
+	font-size: 1em;
 	margin: 0.4em 0;
 	padding: 0 0.8em;
 	text-decoration: none;
+	@include mq('nvp'){
+		font-size: 1.2em;
+	}
 	@include mq('nnvp'){
-		font-size: 1em;
 		margin: 0.25em 0;
 		padding: 0 0.5em;
 	}

@@ -45,12 +45,19 @@ table{
 	vertical-align: middle;
 }
 %navList{
+	font-size: 0.875em;
 	margin: 0;
 	padding: 0;
 	list-style: none;
 	>li{
 		display: inline-block; *display: inline;
-		margin: 0 0.5em;
+		margin: 0 0.7em;
+	}
+	@include mq('nvp'){
+		font-size: 1em;
+		>li{
+			margin: 0 0.5em;
+		}
 	}
 }
 @mixin sro(

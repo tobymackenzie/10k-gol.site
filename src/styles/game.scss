@@ -14,7 +14,11 @@
 }
 .tickCount{
 	display: inline-block;
+	font-size: 0.875em;
 	margin: 0 0.4em;
+	@include mq('nvp'){
+		font-size: 1em;
+	}
 }
 
 //==controls

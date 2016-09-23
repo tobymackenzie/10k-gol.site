@@ -8,8 +8,12 @@ body{
 	border-top: 1px solid $color-border;
 	flex-grow: 0;
 	flex-shrink: 0;
+	font-size: 0.875em;
 	padding: 0.8em;
 	text-align: center;
+	@include mq('nvp'){
+		font-size: 1em;
+	}
 	@include mq('nnvp'){
 		padding: 0.5em;
 	}
