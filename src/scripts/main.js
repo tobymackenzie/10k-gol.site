@@ -173,6 +173,11 @@
 						);
 					}
 
+					//--determine interval
+					if(!_self.interval){
+						_self.interval = window.Math.ceil(_self.rows * _self.columns / 12 + 250);
+					}
+
 					//--other els
 					if(!_self.tickCountEl){
 						_self.tickCountEl = this.el.querySelector('.tickCount b');
@@ -227,7 +232,7 @@
 				,tickCountEl: _u
 
 				//--play
-				,interval: 200 //-# seems to be a good comfortable spot between looking cool and being able to tell what's going on
+				,interval: undefined //-# undefined means number determined based on calculation using number of cells.  fast looks cool and makes it easer to see patterns, but makes it hard to see what's happening each tick, and the browser can actually not animate cells that toggle back and forth on a large grid
 				,isPlaying: false
 				,playEl: _u
 				,togglePlay: function(){
