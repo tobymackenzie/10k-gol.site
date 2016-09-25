@@ -58,7 +58,11 @@
 		}
 	}
 }
+%tickAction{
+	@extend %link;
+}
 .nextTick{
+	@extend %tickAction;
 	&:after{
 		@extend %tickActionIcon;
 		content: '>';
@@ -66,6 +70,7 @@
 	}
 }
 .previousTick{
+	@extend %tickAction;
 	&:before{
 		@extend %tickActionIcon;
 		content: '<';
