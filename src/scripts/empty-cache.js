@@ -13,5 +13,5 @@
 	};
 	setTimeout(function(){
 		_cacheCSS(TJM.baseUrl + '/main.css?v=' + TJM.v);
-	}, 200);
+	}, 800);
 })(window.document);
