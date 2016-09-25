@@ -60,6 +60,12 @@
 }
 %tickAction{
 	@extend %link;
+	i{
+		@extend %sro;
+		@include mq('nvp'){
+			@include sroOff();
+		}
+	}
 }
 .nextTick{
 	@extend %tickAction;
