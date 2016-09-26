@@ -12,19 +12,19 @@
 		?><div class="field"><?php
 			?><label>
 				<span class="fieldLabel">Rows</span>
-				<input name="rows" type="number" value="<?=$game->getRowCount()?>" />
+				<input min="1" name="rows" type="number" value="<?=$game->getRowCount()?>" />
 			</label><?php
 		?></div><?php
 		?><div class="field"><?php
 			?><label><?php
 				?><span class="fieldLabel">Columns</span>
-				<input name="columns" type="number" value="<?=$game->getColumnCount()?>" /><?php
+				<input min="1" name="columns" type="number" value="<?=$game->getColumnCount()?>" /><?php
 			?></label><?php
 		?></div><?php
 		?><div class="field"><?php
 			?><label>
 				<span class="fieldLabel">Tick</span>
-				<input name="tick" type="number" value="<?=$game->getTick()?>" />
+				<input min="1" name="tick" type="number" value="<?=$game->getTick()?>" />
 			</label>
 			<span class="fieldDetail">(iterations or generations the game has run)</span><?php
 		?></div><?php
