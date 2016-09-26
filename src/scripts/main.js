@@ -171,7 +171,7 @@
 
 					//--determine interval
 					if(!_self.interval){
-						_self.interval = window.Math.ceil(_self.rows * _self.columns / 12 + 250);
+						_self.interval = _w.Math.ceil(_self.rows * _self.columns / 12 + 250);
 					}
 
 					//--other els
