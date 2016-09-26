@@ -14,6 +14,8 @@ $commands = Array(
 	,'git push -f'
 	,'git checkout master'
 	,'git merge src'
+	,'bin/build'
+	,'{{commit}}'
 	,'git push'
 	,'git checkout src'
 	,'{{stash pop}}'
