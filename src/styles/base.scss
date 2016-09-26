@@ -2,17 +2,33 @@
 	box-sizing: border-box;
 }
 %link{
+	background: none;
+	border: 0;
 	color: $color-link;
+	font-size: 1em;
+	padding: 0;
+	text-decoration: underline;
 	&:focus, &:hover{
+		background: none; //-# undo button style
 		color: $color-focusedLink;
 	}
 }
 a{
 	@extend %link;
 }
+b, i{
+	font-weight: normal;
+	font-style: normal;
+}
 body, html{
 	margin: 0;
 	padding: 0;
+}
+button{
+	&[disabled][disabled]{
+		color: $color-disabled;
+		opacity: 0.8;
+	}
 }
 h1, h2{
 	color: $color-heading;
@@ -39,18 +55,34 @@ table{
 	display: inline-block;
 	font-weight: bold;
 	line-height: 1;
+	margin: 0 0.4em 0 0;
 	position: relative;
 	top: -0.1em;
 	vertical-align: middle;
 }
 %navList{
+	font-size: 0.875em;
 	margin: 0;
 	padding: 0;
 	list-style: none;
 	>li{
 		display: inline-block; *display: inline;
-		margin: 0 0.5em;
+		margin: 0 0.7em;
 	}
+	@include mq('nvp'){
+		font-size: 1em;
+		>li{
+			margin: 0 0.5em;
+		}
+	}
+}
+%spinMove{
+	display: inline-block;
+	transform: rotate(0);
+	transition: transform 0.5s ease;
+}
+%spinMoveAction{
+	transform: rotate(-720deg);
 }
 @mixin sro(
 	$border: 0

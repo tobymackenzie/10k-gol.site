@@ -1,5 +1,5 @@
 body{
-	display: block; display: flex;
+	display: flex;
 	flex-direction: column;
 	flex-shrink: 0;
 	height: 100vh;
@@ -8,10 +8,27 @@ body{
 	border-top: 1px solid $color-border;
 	flex-grow: 0;
 	flex-shrink: 0;
+	font-size: 0.875em;
 	padding: 0.8em;
 	text-align: center;
+	@include mq('nvp'){
+		font-size: 1em;
+	}
 	@include mq('nnvp'){
 		padding: 0.5em;
+	}
+}
+.footerA{
+	>i{
+		@extend %spinMove;
+		color: $color-toby;
+		text-decoration: underline; //-# loses underline from `display:block`
+	}
+	&:focus, &:hover{
+		>i{
+			@extend %spinMoveAction;
+			color: $color-focusedLink;
+		}
 	}
 }
 main{

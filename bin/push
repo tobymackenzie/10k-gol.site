@@ -2,44 +2,80 @@
 <?php
 $projectRoot = __DIR__ . '/..';
 chdir($projectRoot);
-
+// Changes not staged for commit
 $commands = Array(
-	'git checkout src'
+	'{{stash}}'
+	,'git checkout src'
 	,'git push'
-	,'git stash'
 	,'git checkout dist'
 	,'git rebase src'
 	,'bin/build'
-	,'git commit -a --amend'
+	,'{{commit}}'
 	,'git push -f'
 	,'git checkout master'
 	,'git reset --hard HEAD~1'
 	,'git rebase dist'
 	,'git push -f'
 	,'git checkout src'
-	,'git stash pop'
+	,'{{stash pop}}'
+	,'bin/build'
 );
 
 $return = 0;
+$stashed = false;
+
 foreach($commands as $command){
-	if($command === 'git commit -a --amend'){
-		passthru('git status');
-		echo "Do you want to replace the dist commit?\n";
-		$inputHandle = fopen("php://stdin","r");
-		$input = fgets($inputHandle);
-		switch(strtolower(trim($input))){
-			case 'y':
-			case 'yes':
+	if($return === 0){
+		switch($command){
+			case '{{commit}}':
+				if(hasUnstagedChanges()){
+					passthru('git status');
+					echo "Do you want to commit this dist?\n";
+					$inputHandle = fopen("php://stdin","r");
+					switch(strtolower(trim(fgets($inputHandle)))){
+						//-# don't check return status on commits because there might be nothing to commit.  Not sure how to check for
+						case 'y':
+						case 'yes':
+							runCommand('git commit -a -m "build dist"');
+						break;
+						case 'a':
+						case 'amend':
+							runCommand('git commit -a --amend --no-edit');
+						break;
+						default:
+							echo "cancelling";
+							$return = 1;
+						break;
+					}
+					fclose($inputHandle);
+				}
+			break;
+			case '{{stash}}':
+				if(hasUnstagedChanges()){
+					//--check if we need to make a stash first
+					$return = runCommand('git stash');
+					$stashed = true;
+				}
+			break;
+			case '{{stash pop}}':
+				if($stashed){
+					$return = runCommand('git stash pop');
+				}
 			break;
 			default:
-				$return = 1;
+				$return = runCommand($command);
 			break;
 		}
-		fclose($inputHandle);
-	}
-	if($return === 0){
-		echo "running {$command}\n";
-		passthru($command, $return);
 	}
 }
 
+function hasUnstagedChanges(){
+	exec('git status', $tmp);
+	$tmp = implode("\n", $tmp);
+	return (strpos($tmp, 'Changes not staged for commit') !== false);
+}
+function runCommand($command){
+	echo "running {$command}\n";
+	passthru($command, $return);
+	return $return;
+}

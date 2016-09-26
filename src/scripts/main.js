@@ -151,26 +151,27 @@
 						_self.controlsEl = _d.querySelector('.gameControls');
 					}
 					_self.previousAction = _self.controlsEl.querySelector('.previousTick');
-					__Els.addListener(_self.previousAction, 'click', function(_event){
-						if(_self._previousTickDiff.length && !__Els.isEventModified(_event)){
-							__Els.preventDefault(_event);
+					if(_self.previousAction){
+						//--store href for if button gets clicked past in memory history
+						if(_self.previousAction.hasAttribute('href')){
+							_self.previousHref = _self.previousAction.getAttribute('href');
+						}
+						_self.previousAction = _self.__convertTickActionToButton(_self.previousAction);
+						__Els.addListener(_self.previousAction, 'click', function(){
 							_self.decrementTick();
-						}
-					});
+						});
+					}
 					_self.nextAction = _self.controlsEl.querySelector('.nextTick');
-					__Els.addListener(_self.nextAction, 'click', function(_event){
-						if(!__Els.isEventModified(_event)){
-							__Els.preventDefault(_event);
+					if(_self.nextAction){
+						_self.nextAction = _self.__convertTickActionToButton(_self.nextAction);
+						__Els.addListener(_self.nextAction, 'click', function(){
 							_self.incrementTick();
-						}
-					});
+						});
+					}
 
-					//--determine tick
-					if(!_self.tick){
-						_self.tick = (_self.el.getAttribute('data-tick')
-							? parseInt(_self.el.getAttribute('data-tick'), 10)
-							: 1
-						);
+					//--determine interval
+					if(!_self.interval){
+						_self.interval = _w.Math.ceil(_self.rows * _self.columns / 12 + 250);
 					}
 
 					//--other els
@@ -199,9 +200,24 @@
 						});
 						_self.el.setAttribute('data-playing', 'stopped');
 					}
+
+					//--determine tick.  do last so a
+					if(!_self.tick){
+						_self.setTick(_self.el.getAttribute('data-tick')
+							? parseInt(_self.el.getAttribute('data-tick'), 10)
+							: 1
+						);
+					}
 				}
 				,columns: _u
 				,controlsEl: _u
+				,__convertTickActionToButton: function(_action){
+					var _tmp = _action.parentNode;
+					_tmp.innerHTML = _tmp.innerHTML.replace('<a', '<button').replace('</a>', '</button>');
+					_action = _tmp.querySelector('button');
+					_action.removeAttribute('href');
+					return _action;
+				}
 				,el: _u
 				,getAliveNeighborCount: function(_row, _column){
 					var _count = 0;
@@ -222,12 +238,13 @@
 				,grid: _u
 				,nextAction: _u
 				,previousAction: _u
+				,previousHref: _u
 				,rows: _u
 				,tick: _u
 				,tickCountEl: _u
 
 				//--play
-				,interval: 600
+				,interval: undefined //-# undefined means number determined based on calculation using number of cells.  fast looks cool and makes it easer to see patterns, but makes it hard to see what's happening each tick, and the browser can actually not animate cells that toggle back and forth on a large grid
 				,isPlaying: false
 				,playEl: _u
 				,togglePlay: function(){
@@ -244,6 +261,7 @@
 						_self.playEl.innerHTML = 'Stop';
 						var _play = function(){
 							_self.incrementTick();
+							//-# repeatedly set timeout instead of use interval so we can't tick faster than the browser can carry out tick increment logic
 							_self._timeout = _w.setTimeout(_play, _self.interval);
 						};
 						_play();
@@ -260,9 +278,17 @@
 					}
 				}
 				,setTick: function(_value){
-					this.tick = _w.parseInt(_value, 10);
-					if(this.tickCountEl){
-						this.tickCountEl.innerHTML = this.tick;
+					var _self = this;
+					_self.tick = _w.parseInt(_value, 10);
+					if(_self.tickCountEl){
+						_self.tickCountEl.innerHTML = _self.tick;
+					}
+					if(_self.previousAction){
+						if(_self.tick === 1){
+							_self.previousAction.disabled = true;
+						}else if(_self.previousAction.disabled){
+							_self.previousAction.disabled = false;
+						}
 					}
 				}
 				,decrementTick: function(){
@@ -273,9 +299,9 @@
 							_self._applyTickDiff(_self._previousTickDiff.pop());
 							_self.setTick(_self.tick - 1);
 							_self.isTicking = false;
-						}else{
-							//-!!! should just send back via server side refresh, handled by listener currently
-							alert('There are no more previous ticks.');
+						}else if(_self.previousHref){
+							//--go back to our original href if we have no more history in memory
+							_w.location.href = _self.previousHref;
 						}
 					}
 				}

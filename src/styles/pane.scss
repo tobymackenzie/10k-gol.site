@@ -17,12 +17,19 @@
 		width: 32em;
 		z-index: $z-back;
 	}
-	&[data-opened]{ //--js
-		display: block;
-		opacity: 0;
-		transform: translateX(100%);
-		transition: opacity 0.2s ease, transform 0.2s ease;
+	&.pane.pane, x:-o-prefocus{ //--`fixed` fixed for opera mini.  sorry, opera desktop, tell your mini friend it can't do `fixed`
+		height: auto;
+		min-height: 100%;
+		position: absolute;
+		transform: translateX(0);
 	}
+	//-!! for js opening
+	// &[data-opened]{ //--js
+	// 	display: block;
+	// 	opacity: 0;
+	// 	transform: translateX(100%);
+	// 	transition: opacity 0.2s ease, transform 0.2s ease;
+	// }
 	&:target, &[data-opened='opened']{
 		opacity: 1;
 		transform: translateX(0);

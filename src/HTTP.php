@@ -3,7 +3,7 @@ namespace TJM\Life10k;
 use TJM\Life10k\Game;
 
 class HTTP{
-	protected $assetVersion = 1;
+	protected $assetVersion = 3;
 	protected $game;
 	protected $hasCache = false;
 	protected $query;
@@ -215,6 +215,9 @@ class HTTP{
 			. '://'
 			. ($_SERVER['SERVER_NAME'] ? $_SERVER['SERVER_NAME'] : $_SERVER['PWD'])
 		;
+	}
+	public function getAssetUrl($asset){
+		return $this->getRelativeUrlBase() . '/' . $asset . '?v=' . $this->assetVersion;
 	}
 	public function getNextUrl($game = null){
 		if(!$game){

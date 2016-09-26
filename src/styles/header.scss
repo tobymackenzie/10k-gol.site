@@ -11,32 +11,30 @@
 .logo{
 	color: $color-logo;
 	display: inline-block;
-	font-size: 1.2em;
+	font-size: 1em;
 	margin: 0.4em 0;
 	padding: 0 0.8em;
 	text-decoration: none;
+	@include mq('nvp'){
+		font-size: 1.2em;
+	}
 	@include mq('nnvp'){
-		font-size: 1em;
 		margin: 0.25em 0;
 		padding: 0 0.5em;
 	}
 	>b{
 		text-decoration: underline;
 	}
-	>b + b{
-		color: $color-toby;
-		display: inline-block;
+	>i{
+		@extend %spinMove;
+		color: $color-logoAlt;
 		font-size: 0.9em;
-		text-decoration: none;
-		transform: rotate(0);
-		transition: transform 0.5s ease;
+		font-style: normal;
 		vertical-align: middle;
-		&:hover{
-			transform: rotate(-720deg);
-		}
 	}
 	&:focus, &:hover{
-		>b + b{
+		>i{
+			@extend %spinMoveAction;
 			color: $color-logo;
 		}
 	}
@@ -75,7 +73,6 @@ nav{
 		content: 'i';
 		// content: '¡';
 		font-size: 0.7em;
-		margin-right: 0.4em;
 		padding: 0.2em 0.3em;
 	}
 }
@@ -84,7 +81,6 @@ nav{
 		@extend %icon;
 		content: '</>';
 		font-size: 0.8em;
-		margin-right: 0.4em;
 	}
 }
 [href='#settings']{
@@ -92,6 +88,5 @@ nav{
 		@extend %icon;
 		content: '±';
 		font-size: 0.9em;
-		margin-right: 0.4em;
 	}
 }

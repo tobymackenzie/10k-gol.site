@@ -63,7 +63,8 @@ foreach($tasks as $task){
 					,'dest'=> $projectRoot . '/pre.js'
 				)
 			) as $data){
-				$command = 'uglifyjs --compress --mangle -- ' . $data['src'] . ' > ' . $data['dest'];
+				//-#mangle shrunk gzipped weight of main.js by 0.2kb at time of testing
+				$command = 'uglifyjs --compress --mangle --mangle-props --reserve-domprops -- ' . $data['src'] . ' > ' . $data['dest'];
 				//-# may need for newer versions of uglify --support-ie8
 				passthru($command);
 			}
