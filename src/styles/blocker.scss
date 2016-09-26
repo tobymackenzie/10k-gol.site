@@ -5,7 +5,7 @@
 	padding: 1em;
 	position: absolute; position: fixed;
 	top: 0;
-	transition: opacity 0.2s ease;
+	transition: opacity 0.14s ease;
 	width: 100%;
 	z-index: $z-behindFront;
 	:target ~ &{
