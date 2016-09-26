@@ -1,7 +1,7 @@
 (function(_w, _d, _u){
 	//--safe, short console log for dev.  dropped by build if not used
 	var clog = function(){
-		if(_w.console && _w.console.log){
+		if(_w.console && _w.console.log && _w.console.log.apply){
 			_w.console.log.apply(_w.console, arguments);
 		}
 	};
