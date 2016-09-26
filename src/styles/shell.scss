@@ -9,6 +9,7 @@ body{
 	flex-grow: 0;
 	flex-shrink: 0;
 	font-size: 0.875em;
+	overflow: hidden; //-# prevent '<toby>' animation from causing scroll bars and thus significant reflow
 	padding: 0.8em;
 	text-align: center;
 	@include mq('nvp'){
