@@ -169,11 +169,6 @@
 						});
 					}
 
-					//--determine interval
-					if(!_self.interval){
-						_self.interval = _w.Math.ceil(_self.rows * _self.columns / 12 + 250);
-					}
-
 					//--other els
 					if(!_self.tickCountEl){
 						_self.tickCountEl = this.el.querySelector('.tickCount b');
@@ -208,6 +203,23 @@
 							: 1
 						);
 					}
+
+					if(!_self.perf){
+						//--do quick perf test to factor into speed of play
+						if(_w.performance && _w.performance.now){
+							var _start = _w.performance.now();
+							_self.incrementTick();
+							_self.decrementTick();
+							_self.perf = _w.performance.now() - _start;
+						}else{
+							_self.perf = 30;
+						}
+					}
+
+					//--determine interval
+					if(!_self.interval){
+						_self.interval = _w.Math.ceil(_self.rows * _self.columns / 12 + 220 + _self.perf * 6);
+					}
 				}
 				,columns: _u
 				,controlsEl: _u
@@ -237,6 +249,7 @@
 				}
 				,grid: _u
 				,nextAction: _u
+				,perf: _u
 				,previousAction: _u
 				,previousHref: _u
 				,rows: _u
