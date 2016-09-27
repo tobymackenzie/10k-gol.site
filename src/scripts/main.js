@@ -213,7 +213,7 @@
 				,controlsEl: _u
 				,__convertTickActionToButton: function(_action){
 					var _tmp = _action.parentNode;
-					_tmp.innerHTML = _tmp.innerHTML.replace('<a', '<button').replace('</a>', '</button>');
+					_tmp.innerHTML = _tmp.innerHTML.replace(/<a/i, '<button').replace(/<\/a>/i, '</button>');
 					_action = _tmp.querySelector('button');
 					_action.removeAttribute('href');
 					return _action;
