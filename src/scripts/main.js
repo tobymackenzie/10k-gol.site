@@ -1,7 +1,7 @@
 (function(_w, _d, _u){
 	//--safe, short console log for dev.  dropped by build if not used
 	var clog = function(){
-		if(_w.console && _w.console.log){
+		if(_w.console && _w.console.log && _w.console.log.apply){
 			_w.console.log.apply(_w.console, arguments);
 		}
 	};
@@ -169,11 +169,6 @@
 						});
 					}
 
-					//--determine interval
-					if(!_self.interval){
-						_self.interval = _w.Math.ceil(_self.rows * _self.columns / 12 + 250);
-					}
-
 					//--other els
 					if(!_self.tickCountEl){
 						_self.tickCountEl = this.el.querySelector('.tickCount b');
@@ -208,12 +203,29 @@
 							: 1
 						);
 					}
+
+					if(!_self.perf){
+						//--do quick perf test to factor into speed of play
+						if(_w.performance && _w.performance.now){
+							var _start = _w.performance.now();
+							_self.incrementTick();
+							_self.decrementTick();
+							_self.perf = _w.performance.now() - _start;
+						}else{
+							_self.perf = 30;
+						}
+					}
+
+					//--determine interval
+					if(!_self.interval){
+						_self.interval = _w.Math.ceil(_self.rows * _self.columns / 12 + 220 + _self.perf * 6);
+					}
 				}
 				,columns: _u
 				,controlsEl: _u
 				,__convertTickActionToButton: function(_action){
 					var _tmp = _action.parentNode;
-					_tmp.innerHTML = _tmp.innerHTML.replace('<a', '<button').replace('</a>', '</button>');
+					_tmp.innerHTML = _tmp.innerHTML.replace(/<a/i, '<button').replace(/<\/a>/i, '</button>');
 					_action = _tmp.querySelector('button');
 					_action.removeAttribute('href');
 					return _action;
@@ -237,6 +249,7 @@
 				}
 				,grid: _u
 				,nextAction: _u
+				,perf: _u
 				,previousAction: _u
 				,previousHref: _u
 				,rows: _u
