@@ -195,11 +195,7 @@ tr{
 		height: auto;
 	}
 }
-th{
-	@extend %sro;
-	display: block;
-}
-thead{
+th, thead{
 	@extend %sro;
 	display: block;
 }
