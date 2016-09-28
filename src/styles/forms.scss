@@ -16,6 +16,7 @@ button{
 .fieldDetail{
 	color: $color-fieldDetail;
 	display: block;
+	font-size: 0.875em;
 	margin-top: 0.2em;
 	@include mq('nvp'){
 		margin-left: 17%;

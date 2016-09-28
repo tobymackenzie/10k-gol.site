@@ -9,8 +9,11 @@
 }
 .gameHeader{
 	flex-grow: 0;
-	padding: 0.5em 1em;
+	padding: 0.5em 0.5em 0.25em;
 	text-align: center;
+	@include mq('nvp'){
+		padding: 0.5em 1em;
+	}
 }
 .tickCount{
 	display: inline-block;

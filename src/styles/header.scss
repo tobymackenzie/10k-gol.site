@@ -31,6 +31,9 @@
 		font-size: 0.9em;
 		font-style: normal;
 		vertical-align: middle;
+		@include mq('nnvp'){
+			display: none;
+		}
 	}
 	&:focus, &:hover{
 		>i{
