@@ -389,12 +389,18 @@
 			});
 			var _Cell = __Classes.create({
 				_init: function(){
-					this._parent.apply(this, arguments);
-					if(typeof this.alive === 'undefined' && this.el){
-						this.alive = __Els.hasClass(this.el, 'alive');
+					var _self = this;
+					_self._parent.apply(_self, arguments);
+					if(typeof _self.alive === 'undefined' && _self.el){
+						_self.alive = __Els.hasClass(_self.el, 'alive');
 					}
-					if(this.el && !this.abbrEl){
-						this.abbrEl = this.el.querySelector('abbr');
+					if(_self.el){
+						if(!_self.abbrEl){
+							_self.abbrEl = _self.el.querySelector('abbr');
+						}
+						if(!_self.bEl){
+							_self.bEl = _self.el.querySelector('b');
+						}
 					}
 				}
 				,abbrEl: _u
@@ -408,14 +414,18 @@
 								__Els.removeClass(this.el, 'dead');
 								if(this.abbrEl){
 									this.abbrEl.title = 'alive';
-									this.abbrEl.innerHTML = 'O';
+								}
+								if(this.bEl){
+									this.bEl.innerHTML = 'O';
 								}
 							}else{
 								__Els.removeClass(this.el, 'alive');
 								__Els.addClass(this.el, 'dead');
 								if(this.abbrEl){
 									this.abbrEl.title = 'dead';
-									this.abbrEl.innerHTML = 'X';
+								}
+								if(this.bEl){
+									this.bEl.innerHTML = 'X';
 								}
 							}
 						}
@@ -424,6 +434,7 @@
 				,switchAlive: function(){
 					return this.setAlive(!this.alive);
 				}
+				,bEl: _u
 				,el: _u
 			});
 

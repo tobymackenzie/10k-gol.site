@@ -61,17 +61,18 @@ tbody{
 	&:hover{
 		opacity: 1;
 	}
-	abbr{
+	>abbr{
 		border: 0;
 		display: block;
 		height: 100%;
 		left: 0;
-		overflow: hidden;
 		position: absolute;
 		text-decoration: none;
-		text-indent: 120%;
 		top: 0;
 		width: 100%;
+		>b{
+			@extend %sro;
+		}
 	}
 
 	//--alive state
