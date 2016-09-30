@@ -104,11 +104,12 @@
 				_opts._parent = this.baseClass;
 			}
 			var _class = function(){
-				if(this instanceof _class){
+				var _self = this;
+				if(_self instanceof _class){
 					if(_opts._init){
-						_opts._init.apply(this, arguments);
+						_opts._init.apply(_self, arguments);
 					}else{
-						_opts._parent.apply(this, arguments);
+						_opts._parent.apply(_self, arguments);
 					}
 				}
 			};
@@ -124,7 +125,7 @@
 				_init: function(){
 					var _self = this;
 					_self._parent.apply(_self, arguments);
-					this._previousTickDiff = [];
+					_self._previousTickDiff = [];
 					if(!_self.grid && _self.gridEl){
 						_self.grid = [];
 						var _rowEls = _self.gridEl.querySelectorAll('tbody tr');
@@ -189,7 +190,7 @@
 
 					//--other els
 					if(!_self.tickCountEl){
-						_self.tickCountEl = this.el.querySelector('.tickCount b');
+						_self.tickCountEl = _self.el.querySelector('.tickCount b');
 					}
 					_self.el.setAttribute('data-playing', 'stopped');
 
@@ -229,11 +230,12 @@
 				}
 				,el: _u
 				,getAliveNeighborCount: function(_row, _column){
+					var _self = this;
 					var _count = 0;
-					for(var _iRow = (_row > 0 ? _row - 1 : _row); _iRow <= _row + 1 && _iRow < this.rows; ++_iRow
+					for(var _iRow = (_row > 0 ? _row - 1 : _row); _iRow <= _row + 1 && _iRow < _self.rows; ++_iRow
 					){
-						for(var _iColumn = (_column > 0 ? _column - 1 : _column); _iColumn <= _column + 1 && _iColumn < this.columns; ++_iColumn){
-							if(!(_iRow === _row && _iColumn === _column) && this.getCell(_iRow, _iColumn).alive){
+						for(var _iColumn = (_column > 0 ? _column - 1 : _column); _iColumn <= _column + 1 && _iColumn < _self.columns; ++_iColumn){
+							if(!(_iRow === _row && _iColumn === _column) && _self.getCell(_iRow, _iColumn).alive){
 								++_count;
 							}
 						}
@@ -252,6 +254,7 @@
 				,rows: _u
 				,_controlLisToShift: _u
 				,shiftControl: function(_opts){
+					var _self = this;
 					var _el = _opts.current;
 					if(!_el){
 						var _liEl = _d.createElement('li');
@@ -260,10 +263,10 @@
 						//--only add if we're not hovering the controls, so user is less likely to be trying to press something
 						//-@ http://stackoverflow.com/a/14800287/1139122
 						__Els.addClass(_el, _opts.class);
-						if(!this._controlLisToShift){
-							this._controlLisToShift = [];
+						if(!_self._controlLisToShift){
+							_self._controlLisToShift = [];
 						}
-						this._controlLisToShift.push(_liEl);
+						_self._controlLisToShift.push(_liEl);
 					}
 					if(_el){
 						__Els.addListener(_el, 'click', _opts.click);
@@ -406,26 +409,27 @@
 				,abbrEl: _u
 				,alive: _u
 				,setAlive: function(_state){
-					if(_state !== this.alive){
-						this.alive = _state;
-						if(this.el){
+					var _self = this;
+					if(_state !== _self.alive){
+						_self.alive = _state;
+						if(_self.el){
 							if(_state){
-								__Els.addClass(this.el, 'alive');
-								__Els.removeClass(this.el, 'dead');
-								if(this.abbrEl){
-									this.abbrEl.title = 'alive';
+								__Els.addClass(_self.el, 'alive');
+								__Els.removeClass(_self.el, 'dead');
+								if(_self.abbrEl){
+									_self.abbrEl.title = 'alive';
 								}
-								if(this.bEl){
-									this.bEl.innerHTML = 'O';
+								if(_self.bEl){
+									_self.bEl.innerHTML = 'O';
 								}
 							}else{
-								__Els.removeClass(this.el, 'alive');
-								__Els.addClass(this.el, 'dead');
-								if(this.abbrEl){
-									this.abbrEl.title = 'dead';
+								__Els.removeClass(_self.el, 'alive');
+								__Els.addClass(_self.el, 'dead');
+								if(_self.abbrEl){
+									_self.abbrEl.title = 'dead';
 								}
-								if(this.bEl){
-									this.bEl.innerHTML = 'X';
+								if(_self.bEl){
+									_self.bEl.innerHTML = 'X';
 								}
 							}
 						}
