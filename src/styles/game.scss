@@ -37,15 +37,11 @@
 }
 .playA{
 	@extend %link;
-	&:focus, &:hover{
-		background: none;
-	}
 	&:before{
 		@extend %icon;
 		border-bottom: 0.5em dashed transparent;
 		border-left: 0.8em solid;
 		border-top: 0.5em dashed transparent;
-		content: '';
 		height: 0;
 		margin: 0 0.3em 0 0;
 		width: 0;
