@@ -168,33 +168,30 @@
 							_self.incrementTick();
 						});
 					}
+					_self.resetEl = _self.shiftControl({
+						class: 'resetA'
+						,click: function(){
+							_self.reset();
+						}
+						,current: _self.resetEl
+						,text: '<i></i>Reset'
+					});
+					_self.playEl = _self.shiftControl({
+						class: 'playA'
+						,click: function(){
+							_self.togglePlay();
+						}
+						,current: _self.playEl
+						,text: 'Play'
+					});
+
+					_self.shiftControlLis();
 
 					//--other els
 					if(!_self.tickCountEl){
 						_self.tickCountEl = this.el.querySelector('.tickCount b');
 					}
-					if(!_self.playEl){
-						var _playLiEl = _d.createElement('li');
-						_playLiEl.innerHTML = '<button class="playA">Play</button> '; //-# trailing whitespace since `insertBefore` doesn't add one outside the `li`
-						_self.playEl = _playLiEl.querySelector('button');
-						//--only add if we're not hovering the controls, so user is less likely to be trying to press something
-						//-@ http://stackoverflow.com/a/14800287/1139122
-						var _addPlayEl = function(){
-							var _controlsEl = _self.controlsEl;
-							if(_controlsEl.parentNode.querySelector(':hover') === _controlsEl || _controlsEl.querySelector(':hover')){
-								setTimeout(function(){ _addPlayEl(); }, 100);
-							}else{
-								_controlsEl.insertBefore(_playLiEl, _controlsEl.querySelectorAll('li')[0]);
-							}
-						};
-						_addPlayEl();
-					}
-					if(_self.playEl){
-						__Els.addListener(_self.playEl, 'click', function(){
-							_self.togglePlay();
-						});
-						_self.el.setAttribute('data-playing', 'stopped');
-					}
+					_self.el.setAttribute('data-playing', 'stopped');
 
 					//--determine tick.  do last so a
 					if(!_self.tick){
@@ -253,6 +250,37 @@
 				,previousAction: _u
 				,previousHref: _u
 				,rows: _u
+				,_controlLisToShift: _u
+				,shiftControl: function(_opts){
+					var _el = _opts.current;
+					if(!_el){
+						var _liEl = _d.createElement('li');
+						_liEl.innerHTML = '<button>' + _opts.text + ' </button> '; //-# trailing whitespace since `insertBefore` doesn't add one outside the `li`
+						_el = _liEl.querySelector('button');
+						//--only add if we're not hovering the controls, so user is less likely to be trying to press something
+						//-@ http://stackoverflow.com/a/14800287/1139122
+						__Els.addClass(_el, _opts.class);
+						if(!this._controlLisToShift){
+							this._controlLisToShift = [];
+						}
+						this._controlLisToShift.push(_liEl);
+					}
+					if(_el){
+						__Els.addListener(_el, 'click', _opts.click);
+					}
+					return _el;
+				}
+				,shiftControlLis: function(){
+					var _self = this;
+					var _controlsEl = _self.controlsEl;
+					if(_controlsEl.parentNode.querySelector(':hover') === _controlsEl || _controlsEl.querySelector(':hover')){
+						setTimeout(function(){ _self.shiftControlLis(); }, 100);
+					}else{
+						for(var _i = 0; _i < _self._controlLisToShift.length;  ++_i){
+							_controlsEl.insertBefore(_self._controlLisToShift[_i], _controlsEl.querySelectorAll('li')[0]);
+						}
+					}
+				}
 				,tick: _u
 				,tickCountEl: _u
 
@@ -303,6 +331,13 @@
 							_self.previousAction.disabled = false;
 						}
 					}
+					if(_self.resetEl){
+						if(_self._previousTickDiff.length){
+							_self.resetEl.disabled = false;
+						}else{
+							_self.resetEl.disabled = true;
+						}
+					}
 				}
 				,decrementTick: function(){
 					var _self = this;
@@ -344,6 +379,13 @@
 					}
 				}
 				,isTicking: false
+				,reset: function(){
+					var _self = this;
+					while(_self._previousTickDiff.length){
+						_self.decrementTick();
+					}
+				}
+				,resetEl: _u
 			});
 			var _Cell = __Classes.create({
 				_init: function(){

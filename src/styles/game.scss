@@ -57,6 +57,26 @@
 		}
 	}
 }
+.resetA{
+	@extend %link;
+	>i{
+		&:after{
+			@extend %icon;
+			border-bottom: 0.5em dashed transparent;
+			border-right: 0.5em solid;
+			border-top: 0.5em dashed transparent;
+			height: 0;
+			margin: 0 0.3em 0 0.1em;
+			width: 0;
+		}
+		&:before{
+			@extend %icon;
+			border-left: 0.25em solid;
+			height: 0.875em;
+			margin-right: 0.1em;
+		}
+	}
+}
 %tickAction{
 	@extend %link;
 	i{
