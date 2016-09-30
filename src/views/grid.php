@@ -14,7 +14,7 @@ for($r = 1; $r <= $game->getRowCount(); ++$r){
 	for($c = 1; $c <= $game->getColumnCount(); ++$c){
 		$cell = $game->getCell($r, $c);
 		$alive = $cell->isAlive();
-			?><td class="c<?=($cell->getVariant() ? ' c' . $cell->getVariant() : '')?> <?=($alive ? 'alive' : 'dead')?>"><abbr title="<?=($alive ? 'alive' : 'dead')?>"><?=($alive ? 'O' : 'X')?></abbr></td><?php
+			?><td class="c<?=($cell->getVariant() ? ' c' . $cell->getVariant() : '')?> <?=($alive ? 'alive' : 'dead')?>"><abbr title="<?=($alive ? 'alive' : 'dead')?>"><b><?=($alive ? 'O' : 'X')?></b></abbr></td><?php
 	}
 		?></tr><?php
 }

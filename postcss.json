@@ -1,5 +1,5 @@
 {
-	"use": ["autoprefixer", "cssnano"]
+	"use": ["autoprefixer", "cssnano", "css-mqpacker"]
 	,"autoprefixer": {
 		"browsers": ["last 2 versions", "> 0.5%"]
 		,"flexbox": false

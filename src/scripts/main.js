@@ -104,11 +104,12 @@
 				_opts._parent = this.baseClass;
 			}
 			var _class = function(){
-				if(this instanceof _class){
+				var _self = this;
+				if(_self instanceof _class){
 					if(_opts._init){
-						_opts._init.apply(this, arguments);
+						_opts._init.apply(_self, arguments);
 					}else{
-						_opts._parent.apply(this, arguments);
+						_opts._parent.apply(_self, arguments);
 					}
 				}
 			};
@@ -124,7 +125,7 @@
 				_init: function(){
 					var _self = this;
 					_self._parent.apply(_self, arguments);
-					this._previousTickDiff = [];
+					_self._previousTickDiff = [];
 					if(!_self.grid && _self.gridEl){
 						_self.grid = [];
 						var _rowEls = _self.gridEl.querySelectorAll('tbody tr');
@@ -168,33 +169,30 @@
 							_self.incrementTick();
 						});
 					}
+					_self.resetEl = _self.shiftControl({
+						class: 'resetA'
+						,click: function(){
+							_self.reset();
+						}
+						,current: _self.resetEl
+						,text: '<i></i>Reset'
+					});
+					_self.playEl = _self.shiftControl({
+						class: 'playA'
+						,click: function(){
+							_self.togglePlay();
+						}
+						,current: _self.playEl
+						,text: 'Play'
+					});
+
+					_self.shiftControlLis();
 
 					//--other els
 					if(!_self.tickCountEl){
-						_self.tickCountEl = this.el.querySelector('.tickCount b');
+						_self.tickCountEl = _self.el.querySelector('.tickCount b');
 					}
-					if(!_self.playEl){
-						var _playLiEl = _d.createElement('li');
-						_playLiEl.innerHTML = '<button class="playA">Play</button> '; //-# trailing whitespace since `insertBefore` doesn't add one outside the `li`
-						_self.playEl = _playLiEl.querySelector('button');
-						//--only add if we're not hovering the controls, so user is less likely to be trying to press something
-						//-@ http://stackoverflow.com/a/14800287/1139122
-						var _addPlayEl = function(){
-							var _controlsEl = _self.controlsEl;
-							if(_controlsEl.parentNode.querySelector(':hover') === _controlsEl || _controlsEl.querySelector(':hover')){
-								setTimeout(function(){ _addPlayEl(); }, 100);
-							}else{
-								_controlsEl.insertBefore(_playLiEl, _controlsEl.querySelectorAll('li')[0]);
-							}
-						};
-						_addPlayEl();
-					}
-					if(_self.playEl){
-						__Els.addListener(_self.playEl, 'click', function(){
-							_self.togglePlay();
-						});
-						_self.el.setAttribute('data-playing', 'stopped');
-					}
+					_self.el.setAttribute('data-playing', 'stopped');
 
 					//--determine tick.  do last so a
 					if(!_self.tick){
@@ -232,11 +230,12 @@
 				}
 				,el: _u
 				,getAliveNeighborCount: function(_row, _column){
+					var _self = this;
 					var _count = 0;
-					for(var _iRow = (_row > 0 ? _row - 1 : _row); _iRow <= _row + 1 && _iRow < this.rows; ++_iRow
+					for(var _iRow = (_row > 0 ? _row - 1 : _row); _iRow <= _row + 1 && _iRow < _self.rows; ++_iRow
 					){
-						for(var _iColumn = (_column > 0 ? _column - 1 : _column); _iColumn <= _column + 1 && _iColumn < this.columns; ++_iColumn){
-							if(!(_iRow === _row && _iColumn === _column) && this.getCell(_iRow, _iColumn).alive){
+						for(var _iColumn = (_column > 0 ? _column - 1 : _column); _iColumn <= _column + 1 && _iColumn < _self.columns; ++_iColumn){
+							if(!(_iRow === _row && _iColumn === _column) && _self.getCell(_iRow, _iColumn).alive){
 								++_count;
 							}
 						}
@@ -253,6 +252,38 @@
 				,previousAction: _u
 				,previousHref: _u
 				,rows: _u
+				,_controlLisToShift: _u
+				,shiftControl: function(_opts){
+					var _self = this;
+					var _el = _opts.current;
+					if(!_el){
+						var _liEl = _d.createElement('li');
+						_liEl.innerHTML = '<button>' + _opts.text + ' </button> '; //-# trailing whitespace since `insertBefore` doesn't add one outside the `li`
+						_el = _liEl.querySelector('button');
+						//--only add if we're not hovering the controls, so user is less likely to be trying to press something
+						//-@ http://stackoverflow.com/a/14800287/1139122
+						__Els.addClass(_el, _opts.class);
+						if(!_self._controlLisToShift){
+							_self._controlLisToShift = [];
+						}
+						_self._controlLisToShift.push(_liEl);
+					}
+					if(_el){
+						__Els.addListener(_el, 'click', _opts.click);
+					}
+					return _el;
+				}
+				,shiftControlLis: function(){
+					var _self = this;
+					var _controlsEl = _self.controlsEl;
+					if(_controlsEl.parentNode.querySelector(':hover') === _controlsEl || _controlsEl.querySelector(':hover')){
+						setTimeout(function(){ _self.shiftControlLis(); }, 100);
+					}else{
+						for(var _i = 0; _i < _self._controlLisToShift.length;  ++_i){
+							_controlsEl.insertBefore(_self._controlLisToShift[_i], _controlsEl.querySelectorAll('li')[0]);
+						}
+					}
+				}
 				,tick: _u
 				,tickCountEl: _u
 
@@ -285,9 +316,9 @@
 
 				//--ticking
 				,_previousTickDiff: _u
-				,_applyTickDiff: function(_diff){
+				,_applyTickDiff: function(_diff, _deferApply){
 					for(var _iCells = 0; _iCells < _diff.length; ++_iCells){
-						_diff[_iCells].switchAlive();
+						_diff[_iCells].switchAlive(_deferApply);
 					}
 				}
 				,setTick: function(_value){
@@ -303,13 +334,20 @@
 							_self.previousAction.disabled = false;
 						}
 					}
+					if(_self.resetEl){
+						if(_self._previousTickDiff.length){
+							_self.resetEl.disabled = false;
+						}else{
+							_self.resetEl.disabled = true;
+						}
+					}
 				}
-				,decrementTick: function(){
+				,decrementTick: function(_deferApply){
 					var _self = this;
 					if(!_self.isTicking){
 						if(_self._previousTickDiff.length){
 							_self.isTicking = true;
-							_self._applyTickDiff(_self._previousTickDiff.pop());
+							_self._applyTickDiff(_self._previousTickDiff.pop(), _deferApply);
 							_self.setTick(_self.tick - 1);
 							_self.isTicking = false;
 						}else if(_self.previousHref){
@@ -344,44 +382,74 @@
 					}
 				}
 				,isTicking: false
+				,reset: function(){
+					var _self = this;
+					while(_self._previousTickDiff.length){
+						_self.decrementTick(true);
+					}
+					for(var _iRow = 0; _iRow < _self.rows; ++_iRow){
+						for(var _iColumn = 0; _iColumn < _self.columns; ++_iColumn){
+							_self.getCell(_iRow, _iColumn).applyAlive();
+						}
+					}
+				}
+				,resetEl: _u
 			});
 			var _Cell = __Classes.create({
 				_init: function(){
-					this._parent.apply(this, arguments);
-					if(typeof this.alive === 'undefined' && this.el){
-						this.alive = __Els.hasClass(this.el, 'alive');
+					var _self = this;
+					_self._parent.apply(_self, arguments);
+					if(typeof _self.alive === 'undefined' && _self.el){
+						_self.alive = __Els.hasClass(_self.el, 'alive');
 					}
-					if(this.el && !this.abbrEl){
-						this.abbrEl = this.el.querySelector('abbr');
+					if(_self.el){
+						if(!_self.abbrEl){
+							_self.abbrEl = _self.el.querySelector('abbr');
+						}
+						if(!_self.bEl){
+							_self.bEl = _self.el.querySelector('b');
+						}
 					}
 				}
 				,abbrEl: _u
 				,alive: _u
-				,setAlive: function(_state){
-					if(_state !== this.alive){
-						this.alive = _state;
-						if(this.el){
-							if(_state){
-								__Els.addClass(this.el, 'alive');
-								__Els.removeClass(this.el, 'dead');
-								if(this.abbrEl){
-									this.abbrEl.title = 'alive';
-									this.abbrEl.innerHTML = 'O';
-								}
-							}else{
-								__Els.removeClass(this.el, 'alive');
-								__Els.addClass(this.el, 'dead');
-								if(this.abbrEl){
-									this.abbrEl.title = 'dead';
-									this.abbrEl.innerHTML = 'X';
-								}
+				,applyAlive: function(){
+					var _self = this;
+					if(_self.el){
+						if(_self.alive){
+							__Els.addClass(_self.el, 'alive');
+							__Els.removeClass(_self.el, 'dead');
+							if(_self.abbrEl){
+								_self.abbrEl.title = 'alive';
+							}
+							if(_self.bEl){
+								_self.bEl.innerHTML = 'O';
+							}
+						}else{
+							__Els.removeClass(_self.el, 'alive');
+							__Els.addClass(_self.el, 'dead');
+							if(_self.abbrEl){
+								_self.abbrEl.title = 'dead';
+							}
+							if(_self.bEl){
+								_self.bEl.innerHTML = 'X';
 							}
 						}
 					}
 				}
-				,switchAlive: function(){
-					return this.setAlive(!this.alive);
+				,setAlive: function(_state, _defer){
+					var _self = this;
+					if(_state !== _self.alive){
+						_self.alive = _state;
+						if(_defer !== true){
+							_self.applyAlive();
+						}
+					}
 				}
+				,switchAlive: function(_defer){
+					return this.setAlive(!this.alive, _defer);
+				}
+				,bEl: _u
 				,el: _u
 			});
 
