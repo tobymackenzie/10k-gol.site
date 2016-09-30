@@ -316,9 +316,9 @@
 
 				//--ticking
 				,_previousTickDiff: _u
-				,_applyTickDiff: function(_diff){
+				,_applyTickDiff: function(_diff, _deferApply){
 					for(var _iCells = 0; _iCells < _diff.length; ++_iCells){
-						_diff[_iCells].switchAlive();
+						_diff[_iCells].switchAlive(_deferApply);
 					}
 				}
 				,setTick: function(_value){
@@ -342,12 +342,12 @@
 						}
 					}
 				}
-				,decrementTick: function(){
+				,decrementTick: function(_deferApply){
 					var _self = this;
 					if(!_self.isTicking){
 						if(_self._previousTickDiff.length){
 							_self.isTicking = true;
-							_self._applyTickDiff(_self._previousTickDiff.pop());
+							_self._applyTickDiff(_self._previousTickDiff.pop(), _deferApply);
 							_self.setTick(_self.tick - 1);
 							_self.isTicking = false;
 						}else if(_self.previousHref){
@@ -385,7 +385,12 @@
 				,reset: function(){
 					var _self = this;
 					while(_self._previousTickDiff.length){
-						_self.decrementTick();
+						_self.decrementTick(true);
+					}
+					for(var _iRow = 0; _iRow < _self.rows; ++_iRow){
+						for(var _iColumn = 0; _iColumn < _self.columns; ++_iColumn){
+							_self.getCell(_iRow, _iColumn).applyAlive();
+						}
 					}
 				}
 				,resetEl: _u
@@ -408,35 +413,41 @@
 				}
 				,abbrEl: _u
 				,alive: _u
-				,setAlive: function(_state){
+				,applyAlive: function(){
 					var _self = this;
-					if(_state !== _self.alive){
-						_self.alive = _state;
-						if(_self.el){
-							if(_state){
-								__Els.addClass(_self.el, 'alive');
-								__Els.removeClass(_self.el, 'dead');
-								if(_self.abbrEl){
-									_self.abbrEl.title = 'alive';
-								}
-								if(_self.bEl){
-									_self.bEl.innerHTML = 'O';
-								}
-							}else{
-								__Els.removeClass(_self.el, 'alive');
-								__Els.addClass(_self.el, 'dead');
-								if(_self.abbrEl){
-									_self.abbrEl.title = 'dead';
-								}
-								if(_self.bEl){
-									_self.bEl.innerHTML = 'X';
-								}
+					if(_self.el){
+						if(_self.alive){
+							__Els.addClass(_self.el, 'alive');
+							__Els.removeClass(_self.el, 'dead');
+							if(_self.abbrEl){
+								_self.abbrEl.title = 'alive';
+							}
+							if(_self.bEl){
+								_self.bEl.innerHTML = 'O';
+							}
+						}else{
+							__Els.removeClass(_self.el, 'alive');
+							__Els.addClass(_self.el, 'dead');
+							if(_self.abbrEl){
+								_self.abbrEl.title = 'dead';
+							}
+							if(_self.bEl){
+								_self.bEl.innerHTML = 'X';
 							}
 						}
 					}
 				}
-				,switchAlive: function(){
-					return this.setAlive(!this.alive);
+				,setAlive: function(_state, _defer){
+					var _self = this;
+					if(_state !== _self.alive){
+						_self.alive = _state;
+						if(_defer !== true){
+							_self.applyAlive();
+						}
+					}
+				}
+				,switchAlive: function(_defer){
+					return this.setAlive(!this.alive, _defer);
 				}
 				,bEl: _u
 				,el: _u
