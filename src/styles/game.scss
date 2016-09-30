@@ -79,7 +79,7 @@
 }
 %tickAction{
 	@extend %link;
-	i{
+	>i{
 		@extend %sro;
 		@include mq('nvp'){
 			@include sroOff();

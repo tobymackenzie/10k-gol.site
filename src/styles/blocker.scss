@@ -13,7 +13,7 @@
 		display: block;
 		opacity: 0.3;
 	}
-	b{
+	>b{
 		@extend %sro;
 	}
 	&:hover{
@@ -22,7 +22,7 @@
 	&:focus{
 		opacity: 0.9;
 		z-index: $z-forceFront;
-		b{
+		>b{
 			@extend %sroOff;
 		}
 	}
