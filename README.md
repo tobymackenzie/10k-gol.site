@@ -17,17 +17,17 @@ This project is 6.7kb first load, gzipped by Azure with the default game board, 
 
 #### On Azure
 
-    Load   |  HTML  |       JS        |     CSS
------------|--------|-----------------|-------------
-First      | 6.7kb  |  3.0kb (lazy)   | 3.2kb (lazy)
-Subsequent | 3.8kb  | " (lazy+cached) |  " (cached)
+|     Load   |  HTML  |       JS        |     CSS      |
+|------------|--------|-----------------|--------------|
+| First      | 6.7kb  |  3.0kb (lazy)   | 3.2kb (lazy) |
+| Subsequent | 3.8kb  | " (lazy+cached) |  " (cached)  |
 
 #### On Apache2
 
-    Load   |  HTML  |       JS        |     CSS
------------|--------|-----------------|-------------
-First      | 4.9kb  |  2.8kb (lazy)   | 2.8kb (lazy)
-Subsequent | 2.4kb  | " (lazy+cached) |  " (cached)
+|     Load   |  HTML  |       JS        |     CSS      |
+|------------|--------|-----------------|--------------|
+| First      | 4.9kb  |  2.8kb (lazy)   | 2.8kb (lazy) |
+| Subsequent | 2.4kb  | " (lazy+cached) |  " (cached)  |
 
 
 ### Animation
