@@ -18,7 +18,8 @@ DirectoryIndex index.php
 	RewriteRule .? - [L]
 
 	##==all other routes go through index
-	RewriteRule .? %{ENV:BASE}/index.php [L]
+	#-! not working as desired, forcing 302
+	# RewriteRule .? %{ENV:BASE}/index.php [L]
 </IfModule>
 <IfModule !mod_rewrite.c>
 	<IfModule mod_alias.c>
