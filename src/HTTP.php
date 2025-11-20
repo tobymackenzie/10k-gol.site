@@ -68,7 +68,7 @@ class HTTP{
 	=====*/
 	public function render($file, $data = null){
 		if($data){
-			extract($data);
+			extract($data, EXTR_SKIP);
 		}
 		ob_start();
 		require($file);
