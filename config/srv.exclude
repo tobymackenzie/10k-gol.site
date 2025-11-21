@@ -1,0 +1,16 @@
+.DS_Store
+.git
+/*.lock
+/.git/
+/.gitignore
+/.well-known/
+/bin/
+/composer.json
+/config/
+/node_modules
+/package.json
+/postcss.config.js
+/README.md
+/src/run/cli.php
+/src/scripts/
+/src/styles/
