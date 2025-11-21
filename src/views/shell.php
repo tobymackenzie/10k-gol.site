@@ -4,6 +4,9 @@
 		?><meta charset="utf-8" /><?php
 		?><title><?=(isset($title) ? $title . ' - ' : '')?>Conway's Game of Life (10k) - &lt;toby&gt;</title><?php
 		?><meta content="initial-scale=1,width=device-width" name="viewport" /><?php
+if($this->hasQuery()){
+		?><meta name="robots" content="noindex" /><?php
+}
 if($hasCache){
 		?><link href="<?=$this->getAssetUrl('main.css')?>" rel="stylesheet" /><?php
 }else{

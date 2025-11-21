@@ -234,4 +234,7 @@ class HTTP{
 	public function getRelativeUrlBase(){
 		return $this->relativeUrlBase;
 	}
+	public function hasQuery(){
+		return count($this->query) > 0;
+	}
 }
