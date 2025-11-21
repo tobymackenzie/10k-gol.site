@@ -75,12 +75,3 @@ Build
 For this project, I went with building my own task-runner in the project's server-side language, PHP.  It calls the CLI versions of SASS, uglify js, and postcss where applicable, with the proper arguments so I don't have to remember them.  I liked this a lot.
 
 This project considers everything that goes in the web-root to be generated, including all `index.php` files.  The web-root is the same as the project-root to simplify deployment on Azure.
-
-VCS
----
-
-I use git, as I do with most code projects these days.  Because I like to keep generated content out of version control, I made a separate branch to hold generated content.  I created a script to bring in the changes from the clean branch and update the remote.  The master branch is the generated one because the Azure deployment required it to be.  So I have the following branches:
-
-- **src**: the clean branch that I work in
-- **master**: the generated branch that gets 'src' merged into it, then a build commit if applicable, when I push
-- **dist**: this is another generated branch that I wanted to keep a cleaner history with.  It rebases 'src' and then amends its build commit, staying compatible with 'src'.  This does require a force push, though, which is incompatible with the Azure deployment method.
