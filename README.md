@@ -72,6 +72,18 @@ I am not really a designer, but I have absorbed some basic principles.
 Build
 -----
 
+To build, run `npm install` or equivalent, then run `bin/build`.  The computer must have `php`, `npx`, `sassc`, and `uglifyjs`.
+
 For this project, I went with building my own task-runner in the project's server-side language, PHP.  It calls the CLI versions of SASS, uglify js, and postcss where applicable, with the proper arguments so I don't have to remember them.  I liked this a lot.
 
-This project considers everything that goes in the web-root to be generated, including all `index.php` files.  The web-root is the same as the project-root to simplify deployment on Azure.
+This project considers everything that goes in the `dist` folder to be generated, including all `index.php` files.
+
+Serve
+-----
+
+To deploy on a server, after building, deploy `dist`, `src`, and `vendor` directories and configure the web server's root to point to the `dist` directory.  The web server must support running `index.php` files through PHP processing.
+
+Git
+---
+
+`main` branch is currently deployed version.  `src` branch is roughly version from contest, with some fixes applied.  `master` branch is the deployed version from the contest, with fixes applied.
