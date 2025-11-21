@@ -1,0 +1,10 @@
+{
+	"browserslist": ["last 2 versions", "> 0.5%"],
+	"devDependencies": {
+		"@hail2u/css-mqpacker": "github:hail2u/node-css-mqpacker",
+		"autoprefixer": "latest",
+		"cssnano": "^5",
+		"postcss": "^8",
+		"postcss-cli": "^9"
+	}
+}

@@ -100,15 +100,15 @@ class HTTP{
 			,'v'=> $this->assetVersion
 		);
 		$content = "var TJM = " . json_encode($jsData) . ";"; //--config from PHP
-		$content .= file_get_contents(__DIR__ . '/../pre.js');
+		$content .= file_get_contents(__DIR__ . '/../dist/pre.js');
 		if(!$this->hasCache){
-			$content .= file_get_contents(__DIR__ . '/../empty-cache.js');
+			$content .= file_get_contents(__DIR__ . '/../dist/empty-cache.js');
 		}
 		$response = str_replace('<script><!-- ', "<script><!--\n" . $content . "\n", $response);
 
 		//--inject styles if not in cache
 		if(!$this->hasCache){
-			$content = file_get_contents(__DIR__ . '/../main.css');
+			$content = file_get_contents(__DIR__ . '/../dist/main.css');
 			$response = str_replace('<style><!-- ', "<style><!--\n" . $content . "\n", $response);
 		}
 		return $response;

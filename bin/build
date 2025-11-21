@@ -10,12 +10,17 @@ requires installing of:
 
 */
 $projectRoot = __DIR__ . '/..';
+$distPath = $projectRoot . '/dist';
 if(count($argv) > 1){
 	$tasks = array_slice($argv, 1);
 }else{
 	$tasks = Array('php', 'js', 'css');
 }
 $verbose = true;
+
+if(!is_dir($distPath)){
+	mkdir($distPath, 0755, true);
+}
 
 foreach($tasks as $task){
 	switch($task){
@@ -24,19 +29,18 @@ foreach($tasks as $task){
 				echo "building php scripts\n";
 			}
 			foreach(Array(
-				'/'
-				,'/dist/' //--for bc
-				,'/info/'
-				,'/project/'
+				'/',
+				'/info/',
+				'/project/',
 			) as $relDir){
-				$dir = $projectRoot . $relDir;
+				$dir = $distPath . $relDir;
 				if(!is_dir($dir)){
 					mkdir($dir, 0755, true);
 				}
 				$dest = $dir . 'index.php';
 				$fileContents = "<?php\n";
 				$fileContents .= "\$route = '{$relDir}';\n";
-				$fileContents .= "require(__DIR__ . '" . str_repeat('/..', substr_count($relDir, '/') - 1) . "/src/run/web.php');";
+				$fileContents .= "require(__DIR__ . '" . str_repeat('/..', substr_count($relDir, '/')) . "/src/run/web.php');";
 				file_put_contents(
 					$dest
 					, $fileContents
@@ -52,19 +56,19 @@ foreach($tasks as $task){
 			foreach(Array(
 				Array(
 					'src'=> $projectRoot . '/src/scripts/empty-cache.js'
-					,'dest'=> $projectRoot . '/empty-cache.js'
+					,'dest'=> $distPath . '/empty-cache.js'
 				)
 				,Array(
 					'src'=> $projectRoot . '/src/scripts/main.js'
-					,'dest'=> $projectRoot . '/main.js'
+					,'dest'=> $distPath . '/main.js'
 				)
 				,Array(
 					'src'=> $projectRoot . '/src/scripts/pre.js'
-					,'dest'=> $projectRoot . '/pre.js'
+					,'dest'=> $distPath . '/pre.js'
 				)
 			) as $data){
 				//-#mangle shrunk gzipped weight of main.js by 0.2kb at time of testing
-				$command = 'uglifyjs --compress --mangle --mangle-props --reserve-domprops' . (isset($data['opts']) ? ' ' . $data['opts'] : '') . ' -- ' . $data['src'] . ' > ' . $data['dest'];
+				$command = 'uglifyjs --compress --mangle --mangle-props' . (isset($data['opts']) ? ' ' . $data['opts'] : '') . ' -- ' . $data['src'] . ' > ' . $data['dest'];
 				//$command = 'cat ' . $data['src'] . ' > ' . $data['dest'];
 				//-# may need for newer versions of uglify --support-ie8
 				passthru($command);
@@ -76,9 +80,9 @@ foreach($tasks as $task){
 				echo "building styles\n";
 			}
 			$command =
-				'sass --sourcemap=none ' . $projectRoot . '/src/styles/builds/main.scss'
-				. ' | postcss -c ' . $projectRoot . '/postcss.json --trace'
-				. ' > ' . $projectRoot . '/main.css'
+				'sassc ' . $projectRoot . '/src/styles/builds/main.scss'
+				. ' | npx postcss --trace'
+				. ' > ' . $distPath . '/main.css'
 			;
 			passthru($command);
 		break;
