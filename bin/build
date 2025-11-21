@@ -68,7 +68,7 @@ foreach($tasks as $task){
 				)
 			) as $data){
 				//-#mangle shrunk gzipped weight of main.js by 0.2kb at time of testing
-				$command = 'uglifyjs --compress --mangle --mangle-props' . (isset($data['opts']) ? ' ' . $data['opts'] : '') . ' -- ' . $data['src'] . ' > ' . $data['dest'];
+				$command = 'uglifyjs --compress --mangle --mangle-props reserved=["TJM","baseUrl","hasCache","v"]' . (isset($data['opts']) ? ' ' . $data['opts'] : '') . ' -- ' . $data['src'] . ' > ' . $data['dest'];
 				//$command = 'cat ' . $data['src'] . ' > ' . $data['dest'];
 				//-# may need for newer versions of uglify --support-ie8
 				passthru($command);
