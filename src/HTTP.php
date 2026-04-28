@@ -202,7 +202,7 @@ class HTTP{
 			foreach($neededData as $key=> $value){
 				if(empty($value)){
 					$query[] = "{$key}";
-				}else{
+				}elseif(!is_array($value)){
 					$query[] = "{$key}={$value}";
 				}
 			}
