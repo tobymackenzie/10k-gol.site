@@ -5,7 +5,7 @@
 		?><div class="field"><?php
 			?><label>
 				<span class="fieldLabel">Seed</span>
-				<input name="seed" type="text" value="<?=$game->getSeed()?>" />
+				<input name="seed" type="text" value="<?=ea($game->getSeed())?>" />
 			</label>
 			<span class="fieldDetail">(affects starting set-up)</span><?php
 		?></div><?php

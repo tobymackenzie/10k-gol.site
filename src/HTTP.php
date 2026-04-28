@@ -1,6 +1,7 @@
 <?php
 namespace TJM\Life10k;
 use TJM\Life10k\Game;
+require_once(__DIR__ . '/inc.php');
 
 class HTTP{
 	protected $assetVersion = 4;
